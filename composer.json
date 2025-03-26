@@ -28,9 +28,6 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "composer/package-versions-deprecated": true,
             "laminas/laminas-component-installer": true
-        },
-        "platform": {
-            "php": "8.1.99"
         }
     },
     "extra": {
@@ -45,7 +42,7 @@
         }
     },
     "require": {
-        "php": "~8.4",
+        "php": "^8.4",
         "composer/package-versions-deprecated": "^1.11.99.5",
         "laminas/laminas-component-installer": "^2.6 || ^3.5",
         "laminas/laminas-config-aggregator": "^1.18",
@@ -78,7 +75,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "AppTest\\": "test/AppTest/"
+            "AppTest\\": "tests/AppTest/"
         }
     },
     "scripts": {
@@ -97,15 +94,15 @@
         ],
         "clear-config-cache": "php bin/clear-config-cache.php",
         "enable-codestandard": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
-        "cs-check": "phpcs",
-        "cs-fix": "phpcbf --parallel=1",
+        "cs-check": "./vendor/bin/phpcs --parallel=1",
+        "cs-fix": "./vendor/bin/phpcbf --parallel=1",
         "serve": [
             "Composer\\Config::disableProcessTimeout",
-            "php -S 0.0.0.0:8080 -t public/"
+            "php -S 0.0.0.0:8787 -t public/"
         ],
         "static-analysis": "psalm --stats",
         "static-analysis-update-baseline": "psalm --stats --update-baseline",
-        "static-analysis-incremental": "psalm --threads=4 --diff",
+        "static-analysis-incremental": "psalm --threads=4 --diff --shepherd",
         "static-analysis-baseline-init": [
             "psalm --set-baseline=psalm-baseline.xml",
             "@static-analysis-incremental"
@@ -115,6 +112,8 @@
     },
     "scripts-descriptions": {
         "clear-config-cache": "Clears merged config cache. Required for config changes to be applied.",
+        "cs-check": "Check coding standards using PHPCS from vendor with parallel processing disabled for reliability.",
+        "cs-fix": "Fix coding standards using PHPCBF from vendor with parallel processing disabled for reliability.",
         "static-analysis": "Run static analysis tool Psalm.",
         "static-analysis-update-baseline": "Run static analysis tool Psalm and update baseline.",
         "static-analysis-incremental": "Run Psalm in incremental mode with threading for better performance.",

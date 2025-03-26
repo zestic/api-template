@@ -5,3 +5,14 @@
 /coveralls-upload.json
 /phpunit.xml
 /vendor/
+
+# Docker
+.docker
+docker-compose.override.yml
+
+# Environment specific files
+/config/autoload/*.local.php
+/config/development.config.php
+
+# Database
+/data/db/

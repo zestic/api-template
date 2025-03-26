@@ -1,0 +1,63 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: admin_api_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t admin-api .
+
+      - name: Copy Test Database Config
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/var/www \
+            admin-api \
+            cp config/autoload/database.local.php.dist config/autoload/database.local.php
+
+      - name: Update Test Database Config
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/var/www \
+            admin-api \
+            sed -i 's/host.docker.internal/postgres/g' config/autoload/database.local.php
+
+      - name: Run Tests
+        run: |
+          docker run --rm \
+            --network host \
+            -v ${{ github.workspace }}:/var/www \
+            admin-api \
+            ./vendor/bin/phpunit --colors=always
+
+      - name: Upload Coverage Report
+        if: success()
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/var/www \
+            admin-api \
+            ./vendor/bin/phpunit --coverage-clover clover.xml

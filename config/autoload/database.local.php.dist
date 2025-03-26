@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'db' => [
+        'driver' => 'pdo_pgsql',
+        'host' => 'host.docker.internal', // This will resolve to localhost on the host machine
+        'port' => 5432,
+        'dbname' => 'admin_api',
+        'user' => 'postgres',
+        'password' => 'postgres',
+        'charset' => 'utf8',
+        'schema' => 'public',
+    ],
+];

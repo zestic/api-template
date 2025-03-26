@@ -1,0 +1,29 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www
+    environment:
+      - PHP_IDE_CONFIG=serverName=admin-api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - admin-api
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8787:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php
+    networks:
+      - admin-api
+
+networks:
+  admin-api:
+    driver: bridge
