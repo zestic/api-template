@@ -8,7 +8,9 @@ RUN apk add --no-cache \
 # Install PHP extensions
 RUN docker-php-ext-install \
     pdo \
-    pdo_pgsql
+    pdo_pgsql \
+    && pecl install pcov \
+    && docker-php-ext-enable pcov
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
