@@ -32,6 +32,13 @@ jobs:
       - name: Build Docker Image
         run: docker build -t admin-api .
 
+      - name: Install Dependencies
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/var/www \
+            admin-api \
+            composer install --no-interaction
+
       - name: Copy Test Database Config
         run: |
           docker run --rm \
