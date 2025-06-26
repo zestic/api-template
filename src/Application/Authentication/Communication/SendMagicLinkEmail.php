@@ -5,17 +5,24 @@ declare(strict_types=1);
 namespace Application\Authentication\Communication;
 
 use Communication\Interactor\SendCommunication;
+use Domain\Profile\Repository\ProfileRepositoryInterface;
 use Zestic\GraphQL\AuthComponent\Communication\SendMagicLinkInterface;
 use Zestic\GraphQL\AuthComponent\Entity\MagicLinkToken;
+use Zestic\GraphQL\AuthComponent\Repository\UserRepositoryInterface;
 
 final class SendMagicLinkEmail implements SendMagicLinkInterface
 {
     public function __construct(
         private SendCommunication $sendCommunication,
+        private ProfileRepositoryInterface $profileRepository,
+        private UserRepositoryInterface $userRepository,
     ) {}
 
     public function send(MagicLinkToken $magicLinkToken): void
     {
+        $user = $this->userRepository->findUserById($magicLinkToken->userId);
+        $profile = $this->profileRepository->findById($user->getSystemId());
+
         $communication = [
             'channels' => [
                 'email',
@@ -23,26 +30,26 @@ final class SendMagicLinkEmail implements SendMagicLinkInterface
             'definitionId' => 'auth.magic-link',
             'context' => [
                 'subject' => [
-                    'name' => $context->get('displayName'),
+                    'name' => $profile->getName(),
                 ],
                 'body' => [
-                    'name' => $context->get('displayName'),
-                    'link' => $token->token,
+                    'name' => $profile->getName(),
+                    'link' => $magicLinkToken->token,
                 ],
                 'email' => [
-                    'name' => $context->get('displayName'),
-                    'link' => $token->token,
+                    'name' => $profile->getName(),
+                    'link' => $magicLinkToken->token,
                 ],
                 'sms' => [
-                    'name' => $context->get('displayName'),
-                    'link' => $token->token,
-                    'email' => $context->get('email'),
+                    'name' => $profile->getName(),
+                    'link' => $magicLinkToken->token,
+                    'email' => $user->getEmail(),
                 ],
             ],
             'recipients' => [
                 [
-                    'email' => $context->get('email'),
-                    'name' => $context->get('displayName'),
+                    'email' => $user->getEmail(),
+                    'name' => $profile->getName(),
                 ],
             ],
         ];
