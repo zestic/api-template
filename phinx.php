@@ -12,7 +12,7 @@ return [
             // Local project migrations (if any)
             '%%PHINX_CONFIG_DIR%%/resources/db/migrations',
         ],
-        'seeds' => '%%PHINX_CONFIG_DIR%%/db/seeds',
+        'seeds' => '%%PHINX_CONFIG_DIR%%/resources/db/seeds',
     ],
     'environments' => [
         'default_migration_table' => 'phinxlog',

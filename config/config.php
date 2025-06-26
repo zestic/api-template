@@ -13,12 +13,22 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Mezzio\Twig\ConfigProvider::class,
+    \Xaddax\WebonyxMiddleware\ConfigProvider::class,
+    \Zestic\Flysystem\ConfigProvider::class,
+    \Zestic\GraphQL\AuthComponent\Application\ConfigProvider::class,
+    \Netglue\PsrContainer\Messenger\ConfigProvider::class,
+    \Netglue\PsrContainer\Messenger\FailureCommandsConfigProvider::class,
+    \Netglue\PsrContainer\Messenger\DefaultEventBusConfigProvider::class,
+    \Netglue\PsrContainer\Messenger\DefaultCommandBusConfigProvider::class,
+    \Communication\ConfigProvider::class,
     \Mezzio\Tooling\ConfigProvider::class,
     \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
     \Mezzio\Helper\ConfigProvider::class,
+    \Mezzio\Cors\ConfigProvider::class,
     \Mezzio\ConfigProvider::class,
     \Mezzio\Router\ConfigProvider::class,
     \Laminas\Diactoros\ConfigProvider::class,
@@ -29,9 +39,6 @@ $aggregator = new ConfigAggregator([
         : function (): array {
             return [];
         },
-
-    // Default App module config
-    App\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):
