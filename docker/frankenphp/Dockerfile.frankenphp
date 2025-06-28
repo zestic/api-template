@@ -49,6 +49,9 @@ RUN chown -R www-data:www-data /app \
 # Expose ports
 EXPOSE 80 443
 
-# Health check (uses PHP application endpoint)
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost/health || exit 1
+# Disable health check for development (overrides base image health check)
+HEALTHCHECK NONE
+
+# Production health check (uncomment for production use)
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+#     CMD curl -f http://localhost/health || exit 1
