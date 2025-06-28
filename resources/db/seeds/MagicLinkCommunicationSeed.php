@@ -66,8 +66,10 @@ class MagicLinkCommunicationSeed extends AbstractSeed
             'content' => $this->getMagicLinkEmailTemplate(),
             'content_type' => 'text/html',
             'metadata' => json_encode([
-                'description' => 'A template for sending magic link authentication emails',
-                'version' => '1.0'
+                'description' => 'Updated magic link template for v2.0 with verification endpoint support',
+                'version' => '2.0',
+                'supports_pkce' => true,
+                'verification_endpoint' => '/magic-link/verify'
             ]),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -180,7 +182,8 @@ class MagicLinkCommunicationSeed extends AbstractSeed
         <p style="word-break: break-all; background-color: #f0f0f0; padding: 10px; border-radius: 4px;">{{ link }}</p>
         
         <div class="security-note">
-            <p><strong>Security Note:</strong> This link will expire in 15 minutes and can only be used once. If you didn't request this link, please ignore this email or contact support if you have concerns about your account security.</p>
+            <p><strong>Security Note:</strong> This link will expire in 10 minutes and can only be used once. If you didn't request this link, please ignore this email or contact support if you have concerns about your account security.</p>
+            <p><strong>For Mobile Apps:</strong> This link supports secure PKCE authentication for mobile applications.</p>
         </div>
     </div>
 
@@ -200,7 +203,8 @@ You recently requested a secure login link to access your account. Please use th
 
 {{ link }}
 
-This link will expire in 15 minutes and can only be used once.
+This link will expire in 10 minutes and can only be used once.
+This link supports secure PKCE authentication for mobile applications.
 
 If you didn't request this link, please ignore this email or contact support if you have concerns about your account security.
 

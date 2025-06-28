@@ -13,6 +13,7 @@ docker-compose.override.yml
 # Environment specific files
 /config/autoload/*.local.php
 /config/development.config.php
+/config/jwt
 
 # Database
 /data/db/

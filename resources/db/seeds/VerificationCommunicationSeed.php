@@ -67,8 +67,10 @@ class VerificationCommunicationSeed extends AbstractSeed
             'content' => $this->getEmailVerificationTemplate(),
             'content_type' => 'text/html',
             'metadata' => json_encode([
-                'description' => 'A template for sending email verification links',
-                'version' => '1.0'
+                'description' => 'Updated email verification template for v2.0 with verification endpoint support',
+                'version' => '2.0',
+                'supports_pkce' => true,
+                'verification_endpoint' => '/magic-link/verify'
             ]),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -182,6 +184,7 @@ class VerificationCommunicationSeed extends AbstractSeed
         
         <div class="info-note">
             <p><strong>Note:</strong> This verification link will expire in 24 hours. If you didn't create an account with us, you can safely ignore this email.</p>
+            <p><strong>For Mobile Apps:</strong> This link supports secure PKCE authentication for mobile applications.</p>
         </div>
     </div>
 
@@ -202,6 +205,7 @@ Thank you for registering. To complete your account setup and verify your email 
 {{ link }}
 
 This verification link will expire in 24 hours.
+This link supports secure PKCE authentication for mobile applications.
 
 If you didn't create an account with us, you can safely ignore this email.
 
