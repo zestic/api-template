@@ -21,10 +21,18 @@ final class UserRegistration implements UserCreatedHookInterface
 
     public function execute(RegistrationContext $context, int|string $userId): void
     {
-        $profile = $this->profileFactory->create(new CreateProfileDTO($context->get('displayName')));
+        $dto = $this->getProfileDTO($context);
+        $profile = $this->profileFactory->create($dto);
         $user = $this->userRepository->findUserById($userId);
         $user->setSystemId($profile->getId());
 
         $this->userRepository->update($user);
+    }
+
+    private function getProfileDTO(RegistrationContext $context): CreateProfileDTO
+    {
+        $additionalData = $context->get('additionalData');
+
+        return new CreateProfileDTO($additionalData['displayName']);
     }
 }

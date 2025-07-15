@@ -2,13 +2,20 @@
 
 declare(strict_types=1);
 
+use Mezzio\Cors\Configuration\ConfigurationInterface;
+
 return [
-    'mezzio-cors' => [
-        'allowed_origins' => ['*'], // Adjust based on your needs
-        'allowed_methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-        'allowed_headers' => ['*'],
-        'allowed_max_age' => '86400',
-        'credentials_allowed' => true,
-        'exposed_headers' => ['*'],
+    ConfigurationInterface::CONFIGURATION_IDENTIFIER => [
+        'allowed_headers'     => [
+            'Content-Type',
+            'Authorization',
+            'X-Requested-With',
+            'Accept',
+            'Origin',
+            'X-Client-ID',
+        ],
+        'allowed_max_age'     => '86400',
+        'credentials_allowed' => false,
+        'exposed_headers'     => [],
     ],
 ];

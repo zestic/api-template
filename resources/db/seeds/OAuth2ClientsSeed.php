@@ -20,7 +20,7 @@ class OAuth2ClientsSeed extends AbstractSeed
         $oauthClients = $this->table('oauth_clients');
         
         // Web ReactNative Client (Public Client - no client secret)
-        $webClientId = $this->generateUuid();
+        $webClientId = '02b54777-ebe3-4e25-9bc0-3d1a97663b8f';
         $oauthClients->insert([
             'client_id'       => $webClientId,
             'name'            => 'XADDAX Web App (Development)',
@@ -37,7 +37,7 @@ class OAuth2ClientsSeed extends AbstractSeed
         ]);
 
         // Mobile ReactNative Client (Public Client with custom scheme)
-        $mobileClientId = $this->generateUuid();
+        $mobileClientId = '0266d5f0-3054-439e-8f72-3cdc9c1a35d8';
         $oauthClients->insert([
             'client_id'       => $mobileClientId,
             'name'            => 'XADDAX Mobile App (Development)',
@@ -77,17 +77,5 @@ class OAuth2ClientsSeed extends AbstractSeed
         echo "\nBoth clients are configured as public clients (no client secret required)\n";
         echo "suitable for ReactNative development with PKCE authentication.\n";
         echo "\nFor production, create separate clients with production redirect URIs.\n";
-    }
-
-    /**
-     * Generate a UUID v4
-     */
-    private function generateUuid(): string
-    {
-        $data    = random_bytes(16);
-        $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // Set version to 0100
-        $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // Set bits 6-7 to 10
-
-        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 }

@@ -27,13 +27,6 @@ return [
 
                 return array_map($formatter, $errors);
             },
-            // 'context' => function ($request) {
-            //     $token = $request->getHeaderLine('Authorization');
-            //     if (!empty($token)) {
-            //         return new \Zestic\GraphQL\Context\TokenContext($token);
-            //     }
-            //     return null;
-            // },
         ],
     ],
 ];

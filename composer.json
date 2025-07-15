@@ -49,6 +49,7 @@
         "ext-openssl": "*",
         "ext-pdo": "*",
         "actiophp/actio": "dev-main",
+        "adriengras/pkce-php": "*",
         "composer/package-versions-deprecated": "^1.11.99.5",
         "doctrine/dbal": "^3.6",
         "ecodev/graphql-upload": "dev-master",
@@ -64,11 +65,14 @@
         "mezzio/mezzio-cors": "^1.0",
         "mezzio/mezzio-fastroute": "^3.11.0",
         "mezzio/mezzio-helpers": "^5.17",
+        "middlewares/access-log": "*",
+        "middlewares/uuid": "*",
+        "monolog/monolog": "*",
         "nesbot/carbon": "^3.0",
         "ramsey/uuid": "^4.7",
         "symfony/messenger": "^7.2",
-        "xaddax/webonyx-psr15-middleware": "^15.4.0",
         "xaddax/webonyx-middleware-component": "dev-main",
+        "xaddax/webonyx-psr15-middleware": "^15.4.0",
         "zestic/communication-component": "dev-main",
         "zestic/flysystem2-component": "^v0.3.1",
         "zestic/graphql-auth-component": "dev-main"
@@ -137,12 +141,13 @@
         "test-coverage": "docker compose exec app-api vendor/bin/phpunit --colors=always --coverage-clover clover.xml",
         "migrate": "docker compose exec app-api vendor/bin/phinx migrate",
         "migrate-status": "docker compose exec app-api vendor/bin/phinx status",
-        "migrate-rollback": "docker compose exec app-api vendor/bin/phinx rollback",
+        "migrate-rollback": "docker compose exec app-api vendor/bin/phinx rollback -e development",
         "seed": "docker compose exec app-api vendor/bin/phinx seed:run",
         "seed-create": "docker compose exec app-api vendor/bin/phinx seed:create",
         "generate-resolvers": "vendor/bin/generate-resolvers",
         "generate-requests": "vendor/bin/generate-requests",
-        "restart": "docker compose restart"
+        "restart": "docker compose restart",
+        "test-e2e": "docker compose exec app-api vendor/bin/phpunit --colors=always --filter testHappyPathForNewUser tests/Integration/AuthenticationFlowTest.php"
     },
     "scripts-descriptions": {
         "clear-config-cache": "Clears merged config cache. Required for config changes to be applied.",
@@ -160,6 +165,7 @@
         "migrate-rollback": "Rollback last migration with Phinx",
         "seed": "Run database seeds with Phinx",
         "seed-create": "Create a new database seed with Phinx",
-        "restart": "Restart Docker containers"
+        "restart": "Restart Docker containers",
+        "test-e2e": "Run end-to-end authentication flow test with magic link OAuth2 integration"
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8e422b2e5f9c742f2efbf273631ff9a",
+    "content-hash": "b3856092d80f6754460119798be7cf4a",
     "packages": [
         {
             "name": "actiophp/actio",
@@ -50,6 +50,49 @@
                 "source": "https://github.com/zestic/actio/tree/main"
             },
             "time": "2025-04-23T07:01:11+00:00"
+        },
+        {
+            "name": "adriengras/pkce-php",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AdrienGras/pkce-php.git",
+                "reference": "6052f4c9e707ed26d8c5c8d803fad42da71230cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AdrienGras/pkce-php/zipball/6052f4c9e707ed26d8c5c8d803fad42da71230cf",
+                "reference": "6052f4c9e707ed26d8c5c8d803fad42da71230cf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "symfony/test-pack": "^1.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AdrienGras\\PKCE\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adrien Gras",
+                    "email": "agr@owlnext.fr"
+                }
+            ],
+            "description": "A simple utility to use PKCE (Proof Key for Code Exchange) in PHP.",
+            "support": {
+                "issues": "https://github.com/AdrienGras/pkce-php/issues",
+                "source": "https://github.com/AdrienGras/pkce-php/tree/v1.0.4"
+            },
+            "time": "2025-01-07T14:36:33+00:00"
         },
         {
             "name": "aws/aws-crt-php",
@@ -3972,6 +4015,116 @@
             "time": "2024-10-16T20:54:16+00:00"
         },
         {
+            "name": "middlewares/access-log",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/access-log.git",
+                "reference": "033a36d1fc14fc7a4efd22062cc314cf44012fbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/access-log/zipball/033a36d1fc14fc7a4efd22062cc314cf44012fbe",
+                "reference": "033a36d1fc14fc7a4efd22062cc314cf44012fbe",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "psr/http-server-middleware": "^1",
+                "psr/log-implementation": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3",
+                "laminas/laminas-diactoros": "^2 || ^3",
+                "middlewares/utils": "^2 || ^3 || ^4",
+                "monolog/monolog": "^2.0",
+                "oscarotero/php-cs-fixer-config": "^2",
+                "phpstan/phpstan": "^1 || ^2",
+                "phpunit/phpunit": "^8 || ^9",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to generate access logs",
+            "homepage": "https://github.com/middlewares/access-log",
+            "keywords": [
+                "access",
+                "http",
+                "logger",
+                "logging",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server"
+            ],
+            "support": {
+                "issues": "https://github.com/middlewares/access-log/issues",
+                "source": "https://github.com/middlewares/access-log/tree/v2.2.0"
+            },
+            "time": "2025-03-22T19:26:07+00:00"
+        },
+        {
+            "name": "middlewares/uuid",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/uuid.git",
+                "reference": "5e0f862863b4b5a76c880bb3509e99697f6cf385"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/uuid/zipball/5e0f862863b4b5a76c880bb3509e99697f6cf385",
+                "reference": "5e0f862863b4b5a76c880bb3509e99697f6cf385",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "psr/http-server-middleware": "^1",
+                "ramsey/uuid": "^3.5 || ^4.7"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3",
+                "laminas/laminas-diactoros": "^2 || ^3",
+                "middlewares/utils": "^2 || ^3 || ^4",
+                "oscarotero/php-cs-fixer-config": "^2",
+                "phpstan/phpstan": "^1 || ^2",
+                "phpunit/phpunit": "^8 || ^9",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to generate an UUID and save it in the X-Uuid header",
+            "homepage": "https://github.com/middlewares/uuid",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "uuid"
+            ],
+            "support": {
+                "issues": "https://github.com/middlewares/uuid/issues",
+                "source": "https://github.com/middlewares/uuid/tree/v2.1.0"
+            },
+            "time": "2025-03-23T10:44:53+00:00"
+        },
+        {
             "name": "mll-lab/graphql-php-scalars",
             "version": "v6.4.0",
             "source": {
@@ -4031,6 +4184,109 @@
                 "source": "https://github.com/mll-lab/graphql-php-scalars/tree/v6.4.0"
             },
             "time": "2025-02-14T11:22:27+00:00"
+        },
+        {
+            "name": "monolog/monolog",
+            "version": "3.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "10d85740180ecba7896c87e06a166e0c95a0e3b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/10d85740180ecba7896c87e06a166e0c95a0e3b6",
+                "reference": "10d85740180ecba7896c87e06a166e0c95a0e3b6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "psr/log": "^2.0 || ^3.0"
+            },
+            "provide": {
+                "psr/log-implementation": "3.0.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^3.0",
+                "doctrine/couchdb": "~1.0@dev",
+                "elasticsearch/elasticsearch": "^7 || ^8",
+                "ext-json": "*",
+                "graylog2/gelf-php": "^1.4.2 || ^2.0",
+                "guzzlehttp/guzzle": "^7.4.5",
+                "guzzlehttp/psr7": "^2.2",
+                "mongodb/mongodb": "^1.8",
+                "php-amqplib/php-amqplib": "~2.4 || ^3",
+                "php-console/php-console": "^3.1.8",
+                "phpstan/phpstan": "^2",
+                "phpstan/phpstan-deprecation-rules": "^2",
+                "phpstan/phpstan-strict-rules": "^2",
+                "phpunit/phpunit": "^10.5.17 || ^11.0.7",
+                "predis/predis": "^1.1 || ^2",
+                "rollbar/rollbar": "^4.0",
+                "ruflin/elastica": "^7 || ^8",
+                "symfony/mailer": "^5.4 || ^6",
+                "symfony/mime": "^5.4 || ^6"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+                "elasticsearch/elasticsearch": "Allow sending log messages to an Elasticsearch server via official client",
+                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+                "ext-curl": "Required to send log messages using the IFTTTHandler, the LogglyHandler, the SendGridHandler, the SlackWebhookHandler or the TelegramBotHandler",
+                "ext-mbstring": "Allow to work properly with unicode symbols",
+                "ext-mongodb": "Allow sending log messages to a MongoDB server (via driver)",
+                "ext-openssl": "Required to send log messages using SSL",
+                "ext-sockets": "Allow sending log messages to a Syslog server (via UDP driver)",
+                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
+                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+                "rollbar/rollbar": "Allow sending log messages to Rollbar",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Monolog\\": "src/Monolog"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "https://seld.be"
+                }
+            ],
+            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+            "homepage": "https://github.com/Seldaek/monolog",
+            "keywords": [
+                "log",
+                "logging",
+                "psr-3"
+            ],
+            "support": {
+                "issues": "https://github.com/Seldaek/monolog/issues",
+                "source": "https://github.com/Seldaek/monolog/tree/3.9.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Seldaek",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/monolog/monolog",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-03-24T10:02:05+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
@@ -8642,12 +8898,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zestic/graphql-auth-component.git",
-                "reference": "a639998dee991744ff0c7d5c54ebd432093fd746"
+                "reference": "cdb1e2964a8b11b9f0c98a9f65ed2653befe66a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zestic/graphql-auth-component/zipball/a639998dee991744ff0c7d5c54ebd432093fd746",
-                "reference": "a639998dee991744ff0c7d5c54ebd432093fd746",
+                "url": "https://api.github.com/repos/zestic/graphql-auth-component/zipball/cdb1e2964a8b11b9f0c98a9f65ed2653befe66a6",
+                "reference": "cdb1e2964a8b11b9f0c98a9f65ed2653befe66a6",
                 "shasum": ""
             },
             "require": {
@@ -8686,7 +8942,7 @@
                 "issues": "https://github.com/zestic/graphql-auth-component/issues",
                 "source": "https://github.com/zestic/graphql-auth-component/tree/main"
             },
-            "time": "2025-06-17T00:58:30+00:00"
+            "time": "2025-06-26T05:48:00+00:00"
         }
     ],
     "packages-dev": [

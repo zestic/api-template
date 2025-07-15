@@ -45,7 +45,6 @@ return [
             'registrationTtl' => (int) (getenv('AUTH_REGISTRATION_TTL') ?: 1440), // Default 24 hours (in minutes)
         ],
         'magicLink' => [
-            'webAppUrl' => getenv('MAGIC_LINK_WEB_APP_URL') ?: 'http://localhost:3000',
             'authCallbackPath' => '/auth/callback',
             'magicLinkPath' => '/auth/magic-link',
             'defaultSuccessMessage' => 'Authentication successful',

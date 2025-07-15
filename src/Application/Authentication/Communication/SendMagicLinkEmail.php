@@ -26,8 +26,6 @@ final class SendMagicLinkEmail implements SendMagicLinkInterface
         $user    = $this->userRepository->findUserById($magicLinkToken->userId);
         $profile = $this->profileRepository->findById($user->getSystemId());
 
-        // Generate the magic link verification URL
-        // This should point to the /magic-link/verify endpoint with the token parameter
         $verificationUrl = $this->magicLinkConfig->buildRedirectUrl(
             'http://localhost:8088/magic-link/verify',
             ['token' => $magicLinkToken->token]
