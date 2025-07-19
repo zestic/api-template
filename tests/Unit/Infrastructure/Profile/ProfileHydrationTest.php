@@ -39,7 +39,6 @@ final class ProfileHydrationTest extends TestCase
 
         $result = $this->hydration->dehydrate($profile);
 
-        self::assertIsArray($result);
         self::assertEquals('123e4567-e89b-12d3-a456-426614174000', $result['id']);
         self::assertEquals('John Doe', $result['name']);
         self::assertEquals('2023-01-01 10:00:00', $result['created_at']);
@@ -125,7 +124,6 @@ final class ProfileHydrationTest extends TestCase
 
         $result = $this->hydration->dehydrate($profile);
 
-        self::assertIsArray($result);
         self::assertNull($result['id']);
         self::assertEquals('Minimal Profile', $result['name']);
         self::assertNull($result['created_at']);

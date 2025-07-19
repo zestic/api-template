@@ -10,6 +10,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
 use Throwable;
 
 use function time;
@@ -32,8 +33,13 @@ final class HealthHandler implements RequestHandlerInterface
         // Check database connectivity
         try {
             /** @var PDO $pdo */
-            $pdo    = $this->container->get(PDO::class);
-            $stmt   = $pdo->query('SELECT 1');
+            $pdo  = $this->container->get(PDO::class);
+            $stmt = $pdo->query('SELECT 1');
+
+            if ($stmt === false) {
+                throw new RuntimeException('Failed to execute database query');
+            }
+
             $result = $stmt->fetchColumn();
 
             if ($result === 1) {
@@ -68,7 +74,10 @@ final class HealthHandler implements RequestHandlerInterface
     /**
      * Check Weaviate vector database connectivity.
      * TODO: Implement when Weaviate client is available.
+     *
+     * @return array<string, string>
      */
+    // @phpstan-ignore-next-line method.unused
     private function checkWeaviate(): array
     {
         // TODO: Implement Weaviate connectivity check

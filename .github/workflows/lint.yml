@@ -36,7 +36,7 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/app \
             admin-api \
-            ./vendor/bin/psalm --threads=4 --no-cache
+            ./vendor/bin/phpstan analyse --memory-limit=1G --no-progress
 
       - name: Security Check
         uses: symfonycorp/security-checker-action@v5

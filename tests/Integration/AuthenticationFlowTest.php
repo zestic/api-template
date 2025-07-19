@@ -181,7 +181,7 @@ class AuthenticationFlowTest extends TestCase
 
         // Parse the redirect URL to extract query parameters
         $parsedUrl = parse_url($redirectUrl);
-        $this->assertNotNull($parsedUrl, 'Redirect URL should be valid');
+        $this->assertNotFalse($parsedUrl, 'Redirect URL should be valid');
 
         parse_str($parsedUrl['query'] ?? '', $queryParams);
 
@@ -216,7 +216,7 @@ class AuthenticationFlowTest extends TestCase
 
         // Parse the redirect URL to extract query parameters
         $parsedUrl = parse_url($redirectUrl);
-        $this->assertNotNull($parsedUrl, 'Redirect URL should be valid');
+        $this->assertNotFalse($parsedUrl, 'Redirect URL should be valid');
 
         parse_str($parsedUrl['query'] ?? '', $queryParams);
 
@@ -352,6 +352,7 @@ class AuthenticationFlowTest extends TestCase
         return $this->sendGraphqlMutation($mutation, $variables);
     }
 
+    /** @param array<string, mixed> $variables */
     private function sendGraphqlMutation(string $mutation, array $variables): ResponseInterface
     {
         return $this->httpClient->post('/graphql', [
@@ -540,6 +541,8 @@ class AuthenticationFlowTest extends TestCase
 
     /**
      * Exchange authorization code for access token (standard OAuth2 flow)
+     *
+     * @return array<string, mixed>
      */
     private function exchangeAuthCodeForAccessToken(string $authCode): array
     {
@@ -562,6 +565,7 @@ class AuthenticationFlowTest extends TestCase
         ];
     }
 
+    /** @return array<string, mixed> */
     private function exchangeMagicLinkTokenForAccessToken(): array
     {
         $magicLinkToken = $this->getMagicLinkTokenFromMessage();
@@ -609,12 +613,14 @@ class AuthenticationFlowTest extends TestCase
 
     // MailHog helper methods
 
+    /** @return array<string, mixed> */
     private function getEmailsFromMailHog(): array
     {
         $response = $this->httpClient->get('http://mailhog:8025/api/v1/messages');
         return json_decode($response->getBody()->getContents(), true);
     }
 
+    /** @param array<string, mixed> $email */
     private function findMagicLinkInEmail(array $email): ?string
     {
         $body = $email['Content']['Body'] ?? '';

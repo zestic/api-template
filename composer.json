@@ -78,15 +78,15 @@
         "zestic/graphql-auth-component": "dev-main"
     },
     "require-dev": {
+        "filp/whoops": "^2.15.4",
         "laminas/laminas-coding-standard": "~2.5.0",
         "laminas/laminas-development-mode": "^3.13.0",
         "league/flysystem-memory": "^3.13",
         "mezzio/mezzio-tooling": "^2.10.1",
+        "phpstan/phpstan": "*",
+        "phpstan/phpstan-phpunit": "*",
         "phpunit/phpunit": "^10.5.45",
-        "psalm/plugin-phpunit": "^0.19.2",
-        "roave/security-advisories": "dev-master",
-        "vimeo/psalm": "^6.8.8",
-        "filp/whoops": "^2.15.4"
+        "roave/security-advisories": "dev-master"
     },
     "conflict": {
         "amphp/dns": "<2.4.0",
@@ -128,13 +128,9 @@
             "Composer\\Config::disableProcessTimeout",
             "php -S 0.0.0.0:8088 -t public/"
         ],
-        "static-analysis": "psalm --stats",
-        "static-analysis-update-baseline": "psalm --stats --update-baseline",
-        "static-analysis-incremental": "psalm --threads=4 --diff --shepherd",
-        "static-analysis-baseline-init": [
-            "psalm --set-baseline=psalm-baseline.xml",
-            "@static-analysis-incremental"
-        ],
+        "static-analysis": "phpstan analyse --memory-limit=1G",
+        "static-analysis-baseline": "phpstan analyse --generate-baseline",
+        "static-analysis-clear-cache": "phpstan clear-result-cache",
         "test": "docker compose exec app-api vendor/bin/phpunit --colors=always --testsuite=all",
         "test-unit": "docker compose exec app-api vendor/bin/phpunit --colors=always --testsuite=unit",
         "test-integration": "docker compose exec app-api vendor/bin/phpunit --colors=always --testsuite=integration",
@@ -153,10 +149,9 @@
         "clear-config-cache": "Clears merged config cache. Required for config changes to be applied.",
         "cs-check": "Check coding standards using PHPCS from vendor with parallel processing disabled for reliability.",
         "cs-fix": "Fix coding standards using PHPCBF from vendor with parallel processing disabled for reliability.",
-        "static-analysis": "Run static analysis tool Psalm.",
-        "static-analysis-update-baseline": "Run static analysis tool Psalm and update baseline.",
-        "static-analysis-incremental": "Run Psalm in incremental mode with threading for better performance.",
-        "static-analysis-baseline-init": "Initialize or reset the Psalm baseline and run incremental analysis.",
+        "static-analysis": "Run static analysis tool PHPStan.",
+        "static-analysis-baseline": "Generate PHPStan baseline file.",
+        "static-analysis-clear-cache": "Clear PHPStan result cache.",
         "test": "Run all tests (unit and integration) with PHPUnit",
         "test-unit": "Run only unit tests with PHPUnit",
         "test-integration": "Run only integration tests with PHPUnit",

@@ -20,6 +20,6 @@ class CommandBus
         /** @var HandledStamp $stamp */
         $stamp = $envelope->last(HandledStamp::class);
 
-        return $stamp?->getResult();
+        return $stamp->getResult();
     }
 }

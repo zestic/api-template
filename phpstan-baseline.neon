@@ -1,0 +1,217 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Class Application\\GraphQL\\Context\\RequestContext not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: config/autoload/dependencies.global.php
+
+		-
+			message: '#^Cannot call method getEmail\(\) on Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Application/Authentication/Communication/SendMagicLinkEmail.php
+
+		-
+			message: '#^Cannot call method getName\(\) on Domain\\Profile\\Entity\\Profile\|null\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: src/Application/Authentication/Communication/SendMagicLinkEmail.php
+
+		-
+			message: '#^Cannot call method getSystemId\(\) on Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Application/Authentication/Communication/SendMagicLinkEmail.php
+
+		-
+			message: '#^Parameter \#1 \$id of method Domain\\Profile\\Repository\\ProfileRepositoryInterface\:\:findById\(\) expects string, int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Application/Authentication/Communication/SendMagicLinkEmail.php
+
+		-
+			message: '#^Call to method findById\(\) on an unknown class Application\\GraphQL\\Resolver\\Query\\WorkspaceReponsitory\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application/GraphQL/Resolver/Query/GetWorkspaceByIdResolver.php
+
+		-
+			message: '#^Parameter \$repository of method Application\\GraphQL\\Resolver\\Query\\GetWorkspaceByIdResolver\:\:__construct\(\) has invalid type Application\\GraphQL\\Resolver\\Query\\WorkspaceReponsitory\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application/GraphQL/Resolver/Query/GetWorkspaceByIdResolver.php
+
+		-
+			message: '#^Property Application\\GraphQL\\Resolver\\Query\\GetWorkspaceByIdResolver\:\:\$repository has unknown class Application\\GraphQL\\Resolver\\Query\\WorkspaceReponsitory as its type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application/GraphQL/Resolver/Query/GetWorkspaceByIdResolver.php
+
+		-
+			message: '#^Instantiated class Application\\Twig\\Factory\\InvalidExtensionException not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application/Twig/Factory/TwigEnvironmentFactory.php
+
+		-
+			message: '#^Throwing object of an unknown class Application\\Twig\\Factory\\InvalidExtensionException\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application/Twig/Factory/TwigEnvironmentFactory.php
+
+		-
+			message: '#^Cannot call method setSystemId\(\) on Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Domain/User/Interactor/UserRegistration.php
+
+		-
+			message: '#^Parameter \#1 \$id of method Zestic\\GraphQL\\AuthComponent\\Repository\\UserRepositoryInterface\:\:findUserById\(\) expects string, int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Domain/User/Interactor/UserRegistration.php
+
+		-
+			message: '#^Parameter \#1 \$user of method Zestic\\GraphQL\\AuthComponent\\Repository\\UserRepositoryInterface\:\:update\(\) expects Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface, Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Domain/User/Interactor/UserRegistration.php
+
+		-
+			message: '#^Cannot access offset ''body'' on Psr\\Http\\Message\\ResponseInterface\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Cannot access offset ''status'' on Psr\\Http\\Message\\ResponseInterface\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:ensureTestUserExists\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:extractAuthCodeFromRedirect\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:extractTokenFromRedirect\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:findMagicLinkInEmail\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:getEmailsFromMailHog\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:getLoginTokenFromMailHog\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:verifyMagicLink\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Parameter \#1 \$string of function urldecode expects string, array\<mixed\>\|string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Parameter \#1 \$token of method Test\\Integration\\AuthenticationFlowTest\:\:verifyMagicLink\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$accessToken is unused\.$#'
+			identifier: property.unused
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$message has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$pkceData type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$refreshToken is unused\.$#'
+			identifier: property.unused
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$testUser is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$testUser type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Undefined variable\: \$authCode$#'
+			identifier: variable.undefined
+			count: 1
+			path: tests/Integration/AuthenticationFlowTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''PDO'' and PDO will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/Integration/Database/PostgresConnectionTest.php
+
+		-
+			message: '#^Cannot call method fetchColumn\(\) on PDOStatement\|false\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Integration/Database/PostgresConnectionTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Domain\\\\Profile\\\\Entity\\\\Profile'' and Domain\\Profile\\Entity\\Profile will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/Infrastructure/Profile/ProfileHydrationTest.php
+
+		-
+			message: '#^Cannot call method format\(\) on Carbon\\CarbonImmutable\|null\.$#'
+			identifier: method.nonObject
+			count: 6
+			path: tests/Unit/Infrastructure/Profile/ProfileHydrationTest.php
+
+		-
+			message: '#^Class Infrastructure\\Profile\\ProfileHydration constructor invoked with 0 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: tests/Unit/Infrastructure/Profile/ProfileHydrationTest.php

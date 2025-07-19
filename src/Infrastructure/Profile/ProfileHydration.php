@@ -14,6 +14,7 @@ final class ProfileHydration
     ) {
     }
 
+    /** @return array<string, mixed> */
     public function dehydrate(Profile $profile): array
     {
         return [
@@ -22,6 +23,7 @@ final class ProfileHydration
         ];
     }
 
+    /** @param array<string, mixed> $data */
     public function hydrate(array $data): Profile
     {
         $profile = new Profile();
@@ -30,6 +32,7 @@ final class ProfileHydration
         return $profile;
     }
 
+    /** @param array<string, mixed> $data */
     public function update(Profile $profile, array $data): void
     {
         if (isset($data['created_at'])) {

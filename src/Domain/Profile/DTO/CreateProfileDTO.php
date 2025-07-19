@@ -13,6 +13,7 @@ final class CreateProfileDTO implements DTOInterface
     ) {
     }
 
+    /** @return array<string, mixed> */
     public function toArray(): array
     {
         return [

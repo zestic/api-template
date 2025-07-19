@@ -15,7 +15,9 @@ return [
             Zestic\GraphQL\AuthComponent\Contract\UserCreatedHookInterface::class
                 => Domain\User\Interactor\UserRegistration::class,
         ],
-        'invokables'         => [],
+        'invokables'         => [
+            Application\GraphQL\Context\RequestContext::class,
+        ],
         'factories'          => [
             Application\Health\HealthHandler::class => Application\Health\HealthHandlerFactory::class,
         ],

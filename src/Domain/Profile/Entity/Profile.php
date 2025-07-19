@@ -68,7 +68,7 @@ class Profile
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(CarbonImmutable $updatedAt): self
+    public function setUpdatedAt(?CarbonImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
         return $this;

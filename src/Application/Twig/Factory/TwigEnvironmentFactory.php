@@ -151,6 +151,8 @@ class TwigEnvironmentFactory
 
     /**
      * Inject extensions into the TwigEnvironment instance.
+     *
+     * @param array<int, string> $extensions
      */
     private function injectExtensions(
         Environment $environment,
@@ -195,6 +197,8 @@ class TwigEnvironmentFactory
 
     /**
      * Inject Runtime Loaders into the TwigEnvironment instance.
+     *
+     * @param array<int, string> $runtimes
      */
     private function injectRuntimeLoaders(
         Environment $environment,
