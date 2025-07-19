@@ -10,7 +10,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 class GetWorkspaceByIdResolver implements ResolverInterface
 {
     public function __construct(
-        private readonly WorkspaceReponsitory $repository,
+        private readonly WorkspaceRepository $repository,
     ) {}
 
     public function __invoke($source, array $args, $context, ResolveInfo $info): mixed

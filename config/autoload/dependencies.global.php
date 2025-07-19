@@ -16,7 +16,7 @@ return [
                 => Domain\User\Interactor\UserRegistration::class,
         ],
         'invokables'         => [
-            Application\GraphQL\Context\RequestContext::class,
+            GraphQL\Middleware\Context\RequestContext::class,
         ],
         'factories'          => [
             Application\Health\HealthHandler::class => Application\Health\HealthHandlerFactory::class,
