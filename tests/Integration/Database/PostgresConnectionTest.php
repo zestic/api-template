@@ -38,9 +38,9 @@ final class PostgresConnectionTest extends TestCase
             'db' => [
                 'host'     => getenv('DB_HOST') ?: 'postgres',
                 'port'     => (int) (getenv('DB_PORT') ?: 5432),
-                'dbname'   => getenv('DB_NAME') ?: 'xaddax_api',
+                'dbname'   => getenv('DB_NAME') ?: 'zestic_api',
                 'schema'   => getenv('DB_SCHEMA') ?: 'public',
-                'user'     => getenv('DB_USER') ?: 'xaddax',
+                'user'     => getenv('DB_USER') ?: 'zestic',
                 'password' => getenv('DB_PASSWORD') ?: 'password1',
             ],
         ];

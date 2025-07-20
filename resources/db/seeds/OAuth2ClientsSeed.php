@@ -16,14 +16,14 @@ class OAuth2ClientsSeed extends AbstractSeed
      */
     public function run(): void
     {
-        // Create OAuth2 clients for XADDAX ReactNative applications
+        // Create OAuth2 clients for Zestic ReactNative applications
         $oauthClients = $this->table('oauth_clients');
-        
+
         // Web ReactNative Client (Public Client - no client secret)
         $webClientId = '02b54777-ebe3-4e25-9bc0-3d1a97663b8f';
         $oauthClients->insert([
             'client_id'       => $webClientId,
-            'name'            => 'XADDAX Web App (Development)',
+            'name'            => 'Zestic Web App (Development)',
             'client_secret'   => null, // Public client for web ReactNative
             'redirect_uri'    => json_encode([
                 'http://localhost:3000/auth/callback',
@@ -40,7 +40,7 @@ class OAuth2ClientsSeed extends AbstractSeed
         $mobileClientId = '0266d5f0-3054-439e-8f72-3cdc9c1a35d8';
         $oauthClients->insert([
             'client_id'       => $mobileClientId,
-            'name'            => 'XADDAX Mobile App (Development)',
+            'name'            => 'Zestic Mobile App (Development)',
             'client_secret'   => null, // Public client for mobile ReactNative
             'redirect_uri'    => json_encode([
                 'http://localhost:19006/auth/callback', // Expo development server
@@ -49,8 +49,8 @@ class OAuth2ClientsSeed extends AbstractSeed
                 'http://127.0.0.1:8081/auth/callback',  // Metro bundler
                 'exp://localhost:19000/--/auth/callback', // Expo development
                 'exp://127.0.0.1:19000/--/auth/callback', // Expo development
-                'xaddax://auth/callback',               // Custom scheme (for testing)
-                'com.xaddax.app://auth/callback',       // Bundle ID scheme (for testing)
+                'zestic://auth/callback',               // Custom scheme (for testing)
+                'com.zestic.app://auth/callback',       // Bundle ID scheme (for testing)
             ]),
             'is_confidential' => false, // Public client
             'created_at'      => date('Y-m-d H:i:s'),
@@ -72,8 +72,8 @@ class OAuth2ClientsSeed extends AbstractSeed
         echo "- http://localhost:19006/auth/callback (Expo dev server)\n";
         echo "- http://localhost:8081/auth/callback (Metro bundler)\n";
         echo "- exp://localhost:19000/--/auth/callback (Expo dev)\n";
-        echo "- xaddax://auth/callback (custom scheme for testing)\n";
-        echo "- com.xaddax.app://auth/callback (bundle ID scheme for testing)\n";
+        echo "- zestic://auth/callback (custom scheme for testing)\n";
+        echo "- com.zestic.app://auth/callback (bundle ID scheme for testing)\n";
         echo "\nBoth clients are configured as public clients (no client secret required)\n";
         echo "suitable for ReactNative development with PKCE authentication.\n";
         echo "\nFor production, create separate clients with production redirect URIs.\n";

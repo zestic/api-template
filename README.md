@@ -1,8 +1,29 @@
-# Mezzio Skeleton and Installer
+# Zestic API Template
 
-*Begin developing PSR-15 middleware applications in seconds!*
+*A production-ready GraphQL API template built with Mezzio, FrankenPHP, and PostgreSQL*
 
-[mezzio](https://github.com/mezzio/mezzio) builds on
+[![Use this template](https://img.shields.io/badge/use%20this-template-blue?logo=github)](https://github.com/zestic/api-template/generate)
+
+This template provides a complete foundation for building modern GraphQL APIs with authentication, database migrations, and comprehensive development tooling.
+
+## 🚀 Quick Start with This Template
+
+1. **[Use this template](https://github.com/zestic/api-template/generate)** to create a new repository
+2. Clone your new repository locally
+3. Follow the [Getting Started](#getting-started) instructions below
+4. Customize the application for your specific needs
+
+## Features
+
+- **GraphQL-First Architecture**: All data operations through `/graphql` endpoint
+- **Modern PHP Stack**: PHP 8.4 with FrankenPHP for high performance
+- **Authentication Ready**: OAuth2 with PKCE, magic links, and JWT tokens
+- **Database Migrations**: Automated PostgreSQL migrations with Phinx
+- **Development Tools**: Docker, Xdebug, PHPUnit, PHPCS, PHPStan
+- **CI/CD Ready**: GitHub Actions for testing and code quality
+- **Vector Database**: Weaviate integration for AI/ML features
+
+Built on [mezzio](https://github.com/mezzio/mezzio) which builds on
 [laminas-stratigility](https://github.com/laminas/laminas-stratigility) to
 provide a minimalist PSR-15 middleware framework for PHP with routing, DI
 container, optional templating, and optional error handling capabilities.
@@ -188,8 +209,8 @@ You can customize Xdebug behavior with these environment variables:
 
 The development environment includes a local PostgreSQL database with the following default settings:
 
-- **Database Name**: `xaddax_api`
-- **Username**: `xaddax`
+- **Database Name**: `zestic_api`
+- **Username**: `zestic`
 - **Password**: `password1`
 - **Host**: `postgres` (container name)
 - **Port**: `5434` (external), `5432` (internal)
@@ -204,8 +225,8 @@ To connect to the database from your host machine (e.g., using a database client
 # Connection details for external access
 Host: localhost
 Port: 5434
-Database: xaddax_api
-Username: xaddax
+Database: zestic_api
+Username: zestic
 Password: password1
 ```
 
@@ -215,15 +236,15 @@ You can customize the database configuration using these environment variables i
 
 ```bash
 # PostgreSQL Docker container configuration
-POSTGRES_DB=xaddax_api
-POSTGRES_USER=xaddax
+POSTGRES_DB=zestic_api
+POSTGRES_USER=zestic
 POSTGRES_PASSWORD=password1
 
 # Application database connection configuration
 DB_HOST=postgres
 DB_PORT=5432
-DB_NAME=xaddax_api
-DB_USER=xaddax
+DB_NAME=zestic_api
+DB_USER=zestic
 DB_PASSWORD=password1
 DB_SCHEMA=public
 ```
@@ -235,7 +256,7 @@ DB_SCHEMA=public
 The application is configured to connect to an external Weaviate instance via Docker networks:
 
 - **Default URL**: `http://weaviate:8080`
-- **Network**: `xaddax-api-network`
+- **Network**: `zestic-api-network`
 
 To connect to a different Weaviate instance, set the `WEAVIATE_URL` environment variable:
 
@@ -243,7 +264,7 @@ To connect to a different Weaviate instance, set the `WEAVIATE_URL` environment 
 WEAVIATE_URL=http://your-weaviate-host:8080
 ```
 
-**Note**: The Weaviate service should be on the same Docker network (`xaddax-api-network`) for container-to-container communication.
+**Note**: The Weaviate service should be on the same Docker network (`zestic-api-network`) for container-to-container communication.
 
 ### Adding PHP Extensions
 

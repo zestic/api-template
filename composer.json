@@ -1,27 +1,31 @@
 {
-    "name": "mezzio/mezzio-skeleton",
-    "description": "Laminas mezzio skeleton. Begin developing PSR-15 middleware applications in seconds!",
+    "name": "zestic/api-template",
+    "description": "Production-ready GraphQL API template with authentication, database migrations, and modern PHP tooling",
     "type": "project",
-    "license": "BSD-3-Clause",
+    "license": "Apache-2.0",
     "keywords": [
-        "laminas",
+        "api",
+        "graphql",
+        "template",
         "mezzio",
-        "skeleton",
-        "middleware",
-        "psr",
-        "psr-7",
-        "psr-11",
-        "psr-15"
+        "php",
+        "oauth2",
+        "authentication",
+        "postgresql",
+        "frankenphp",
+        "docker"
     ],
-    "homepage": "https://mezzio.dev",
+    "homepage": "https://github.com/zestic/api-template",
     "support": {
-        "docs": "https://docs.mezzio.dev/mezzio/",
-        "issues": "https://github.com/mezzio/mezzio-skeleton/issues",
-        "source": "https://github.com/mezzio/mezzio-skeleton",
-        "rss": "https://github.com/mezzio/mezzio-skeleton/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
+        "issues": "https://github.com/zestic/api-template/issues",
+        "source": "https://github.com/zestic/api-template"
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:zestic/api-template.git"
+        }
+    ],
     "config": {
         "sort-packages": true,
         "allow-plugins": {

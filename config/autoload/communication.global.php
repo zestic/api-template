@@ -7,7 +7,7 @@ return [
         ],
         'channel'   => [
             'email' => [
-                'from' => 'notifications@xaddax.ai',
+                'from' => 'notifications@zestic.com',
             ],
         ],
     ],

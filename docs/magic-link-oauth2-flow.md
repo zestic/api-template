@@ -209,8 +209,8 @@ The API template includes pre-configured OAuth2 clients with fixed UUIDs:
 SELECT client_id, name FROM oauth_clients ORDER BY name;
 
 -- Results:
--- 0266d5f0-3054-439e-8f72-3cdc9c1a35d8 | XADDAX Mobile App (Development)
--- 02b54777-ebe3-4e25-9bc0-3d1a97663b8f | XADDAX Web App (Development)
+-- 0266d5f0-3054-439e-8f72-3cdc9c1a35d8 | Zestic Mobile App (Development)
+-- 02b54777-ebe3-4e25-9bc0-3d1a97663b8f | Zestic Web App (Development)
 ```
 
 ### Client Details:

@@ -1,12 +1,12 @@
-# XADDAX OAuth2 Development Clients
+# Zestic OAuth2 Development Clients
 
-This document describes the OAuth2 clients configured for local development of XADDAX ReactNative applications.
+This document describes the OAuth2 clients configured for local development of Zestic ReactNative applications.
 
 ## Development Clients
 
 ### Web Client (Development)
 - **Client ID**: `{WEB_CLIENT_ID}` (generated during seed)
-- **Name**: XADDAX Web App (Development)
+- **Name**: Zestic Web App (Development)
 - **Type**: Public Client (no client secret)
 - **Confidential**: No
 - **Redirect URIs**:
@@ -17,7 +17,7 @@ This document describes the OAuth2 clients configured for local development of X
 
 ### Mobile Client (Development)
 - **Client ID**: `{MOBILE_CLIENT_ID}` (generated during seed)
-- **Name**: XADDAX Mobile App (Development)
+- **Name**: Zestic Mobile App (Development)
 - **Type**: Public Client (no client secret)
 - **Confidential**: No
 - **Redirect URIs**:
@@ -27,8 +27,8 @@ This document describes the OAuth2 clients configured for local development of X
   - `http://127.0.0.1:8081/auth/callback` (Metro bundler)
   - `exp://localhost:19000/--/auth/callback` (Expo development)
   - `exp://127.0.0.1:19000/--/auth/callback` (Expo development)
-  - `xaddax://auth/callback` (custom scheme for testing)
-  - `com.xaddax.app://auth/callback` (bundle ID scheme for testing)
+  - `zestic://auth/callback` (custom scheme for testing)
+  - `com.zestic.app://auth/callback` (bundle ID scheme for testing)
 
 ## OAuth2 Flow Usage
 

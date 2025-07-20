@@ -52,8 +52,8 @@ class AuthenticationFlowTest extends TestCase
 
         // Initialize database connection (from inside Docker container)
         $this->pdo = new PDO(
-            'pgsql:host=postgres;port=5432;dbname=xaddax_api',
-            'xaddax',
+            'pgsql:host=postgres;port=5432;dbname=zestic_api',
+            'zestic',
             'password1'
         );
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
