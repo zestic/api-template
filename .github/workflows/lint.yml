@@ -44,22 +44,40 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/app \
+            -e DB_HOST=localhost \
+            -e DB_PORT=5432 \
+            -e DB_NAME=zestic_api \
+            -e DB_USER=zestic \
+            -e DB_PASSWORD=password1 \
+            -e DB_SCHEMA=public \
             admin-api \
-            composer install --no-interaction
+            sh -c "git config --global --add safe.directory /app && composer install --no-interaction"
 
       - name: Code Style Check
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/app \
+            -e DB_HOST=localhost \
+            -e DB_PORT=5432 \
+            -e DB_NAME=zestic_api \
+            -e DB_USER=zestic \
+            -e DB_PASSWORD=password1 \
+            -e DB_SCHEMA=public \
             admin-api \
-            ./vendor/bin/phpcs --parallel=1
+            sh -c "git config --global --add safe.directory /app && ./vendor/bin/phpcs --parallel=1"
 
       - name: Static Analysis
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/app \
+            -e DB_HOST=localhost \
+            -e DB_PORT=5432 \
+            -e DB_NAME=zestic_api \
+            -e DB_USER=zestic \
+            -e DB_PASSWORD=password1 \
+            -e DB_SCHEMA=public \
             admin-api \
-            ./vendor/bin/phpstan analyse --memory-limit=1G --no-progress
+            sh -c "git config --global --add safe.directory /app && ./vendor/bin/phpstan analyse --memory-limit=1G --no-progress"
 
       - name: Security Check
         uses: symfonycorp/security-checker-action@v5
