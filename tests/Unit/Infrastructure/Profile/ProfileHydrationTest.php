@@ -7,6 +7,7 @@ namespace Tests\Unit\Infrastructure\Profile;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Domain\Profile\Entity\Profile;
+use Infrastructure\DB\Hydration\CarbonImmutableHydration;
 use Infrastructure\Profile\ProfileHydration;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +17,8 @@ final class ProfileHydrationTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->hydration = new ProfileHydration();
+        $carbonHydration = new CarbonImmutableHydration();
+        $this->hydration = new ProfileHydration($carbonHydration);
 
         // Mock time to a fixed point for predictable tests
         Carbon::setTestNow('2023-01-01 12:00:00');
@@ -79,10 +81,12 @@ final class ProfileHydrationTest extends TestCase
 
         $profile = $this->hydration->hydrate($data);
 
-        self::assertInstanceOf(Profile::class, $profile);
+        // PHPStan knows this is Profile from the hydrate return type
         self::assertEquals('789e0123-e89b-12d3-a456-426614174002', $profile->getId());
         self::assertEquals('Bob Johnson', $profile->getName());
+        self::assertNotNull($profile->getCreatedAt());
         self::assertEquals('2023-03-01 08:15:30', $profile->getCreatedAt()->format('Y-m-d H:i:s'));
+        self::assertNotNull($profile->getUpdatedAt());
         self::assertEquals('2023-03-05 14:45:20', $profile->getUpdatedAt()->format('Y-m-d H:i:s'));
     }
 
@@ -99,6 +103,7 @@ final class ProfileHydrationTest extends TestCase
 
         self::assertEquals('012e3456-e89b-12d3-a456-426614174003', $profile->getId());
         self::assertEquals('Alice Brown', $profile->getName());
+        self::assertNotNull($profile->getCreatedAt());
         self::assertEquals('2023-04-01 12:00:00', $profile->getCreatedAt()->format('Y-m-d H:i:s'));
         self::assertNull($profile->getUpdatedAt());
     }
@@ -158,6 +163,7 @@ final class ProfileHydrationTest extends TestCase
         $this->hydration->update($profile, $updateData);
 
         self::assertEquals('Updated Name', $profile->getName());
+        self::assertNotNull($profile->getUpdatedAt());
         self::assertEquals('2023-05-01 16:20:10', $profile->getUpdatedAt()->format('Y-m-d H:i:s'));
         // ID should remain unchanged
         self::assertEquals('345e6789-e89b-12d3-a456-426614174004', $profile->getId());
@@ -197,8 +203,10 @@ final class ProfileHydrationTest extends TestCase
 
         self::assertEquals('888e7777-e89b-12d3-a456-426614174888', $profile->getId());
         self::assertEquals('Soft Deleted Profile', $profile->getName());
+        self::assertNotNull($profile->getCreatedAt());
         self::assertEquals('2023-02-01 09:00:00', $profile->getCreatedAt()->format('Y-m-d H:i:s'));
         self::assertNull($profile->getUpdatedAt());
+        self::assertNotNull($profile->getDeletedAt());
         self::assertEquals('2023-02-15 16:45:00', $profile->getDeletedAt()->format('Y-m-d H:i:s'));
         self::assertTrue($profile->isDeleted());
     }

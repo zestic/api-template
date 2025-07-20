@@ -107,33 +107,3 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
-			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''PDO'' and PDO will always evaluate to true\.$#'
-			identifier: staticMethod.alreadyNarrowedType
-			count: 1
-			path: tests/Integration/Database/PostgresConnectionTest.php
-
-		-
-			message: '#^Cannot call method fetchColumn\(\) on PDOStatement\|false\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: tests/Integration/Database/PostgresConnectionTest.php
-
-		-
-			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Domain\\\\Profile\\\\Entity\\\\Profile'' and Domain\\Profile\\Entity\\Profile will always evaluate to true\.$#'
-			identifier: staticMethod.alreadyNarrowedType
-			count: 1
-			path: tests/Unit/Infrastructure/Profile/ProfileHydrationTest.php
-
-		-
-			message: '#^Cannot call method format\(\) on Carbon\\CarbonImmutable\|null\.$#'
-			identifier: method.nonObject
-			count: 6
-			path: tests/Unit/Infrastructure/Profile/ProfileHydrationTest.php
-
-		-
-			message: '#^Class Infrastructure\\Profile\\ProfileHydration constructor invoked with 0 parameters, 1 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: tests/Unit/Infrastructure/Profile/ProfileHydrationTest.php

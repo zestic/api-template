@@ -9,6 +9,7 @@ use PDO;
 use PDOException;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use RuntimeException;
 
 /**
  * Integration tests for PostgreSQL database connectivity.
@@ -54,14 +55,17 @@ final class PostgresConnectionTest extends TestCase
         
         try {
             $pdo = $factory($this->container);
-            
-            self::assertInstanceOf(PDO::class, $pdo);
+
+            // PHPStan knows this is PDO from the factory return type
             self::assertEquals(PDO::ERRMODE_EXCEPTION, $pdo->getAttribute(PDO::ATTR_ERRMODE));
             self::assertEquals(PDO::FETCH_ASSOC, $pdo->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE));
             self::assertFalse($pdo->getAttribute(PDO::ATTR_EMULATE_PREPARES));
             
             // Test a simple query to verify connection works
             $stmt = $pdo->query('SELECT version()');
+            if ($stmt === false) {
+                throw new RuntimeException('Failed to execute database query');
+            }
             $version = $stmt->fetchColumn();
             
             self::assertIsString($version);

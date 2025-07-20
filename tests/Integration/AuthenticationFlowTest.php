@@ -30,10 +30,13 @@ class AuthenticationFlowTest extends TestCase
     private PDO $pdo;
     private string $accessToken;
     private string $clientId;
-    private $message;
+    /** @var array<string, mixed> */
+    private array $message;
+    /** @var array<string, mixed> */
     private array $pkceData;
     private string $refreshToken;
     private string $testEmail;
+    /** @var array<string, mixed> */
     private array $testUser;
 
     protected function setUp(): void

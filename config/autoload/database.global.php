@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-// Skip database configuration in CI environments where DB is not needed
-if (getenv('CI') === 'true' || getenv('GITHUB_ACTIONS') === 'true') {
-    return [];
-}
-
 return [
     'db' => [
         'driver'   => 'pdo_pgsql',
