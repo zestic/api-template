@@ -30,8 +30,8 @@ class AuthenticationFlowTest extends TestCase
     private PDO $pdo;
     private string $accessToken;
     private string $clientId;
-    /** @var array<string, mixed> */
-    private array $message;
+    /** @var array<string, mixed>|null */
+    private ?array $message = null;
     /** @var array<string, mixed> */
     private array $pkceData;
     private string $refreshToken;
@@ -99,10 +99,7 @@ class AuthenticationFlowTest extends TestCase
         $this->followLoginLink();
 
         // Step 8: Exchange magic link token for access token
-        $this->exchangeMagicLinkTokenForAccessToken();
-
-        // Step 9: Exchange authorization code for access token (standard OAuth2 flow)
-        $tokenResponse = $this->exchangeAuthCodeForAccessToken($authCode);
+        $tokenResponse = $this->exchangeMagicLinkTokenForAccessToken();
 
         // Verify token exchange was successful with PKCE support
         $this->assertEquals(200, $tokenResponse['status'], 'Magic link token exchange should succeed with PKCE');
@@ -124,10 +121,14 @@ class AuthenticationFlowTest extends TestCase
         $unregisteredEmail = 'unregistered-' . time() . '@example.com';
         
         $response = $this->sendMagicLinkRequest($unregisteredEmail);
-        
-        $this->assertEquals(200, $response['status']);
-        $this->assertEquals('MAGIC_LINK_REGISTRATION', $response['body']['code']);
-        $this->assertStringContainsString('not registered', $response['body']['message']);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $responseData = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertArrayHasKey('data', $responseData);
+        $this->assertArrayHasKey('sendMagicLink', $responseData['data']);
+        $this->assertEquals('MAGIC_LINK_REGISTRATION', $responseData['data']['sendMagicLink']['code']);
+        $this->assertStringContainsString('not registered', $responseData['data']['sendMagicLink']['message']);
     }
 
     /**
@@ -174,7 +175,8 @@ class AuthenticationFlowTest extends TestCase
     {
         // Get the verification token from the email
         $verificationToken = $this->getMagicLinkTokenFromMessage();
-        
+        $this->assertNotNull($verificationToken, 'Verification token should be found in email');
+
         $tokenResponse = $this->verifyMagicLink($verificationToken);
         $this->assertEquals(302, $tokenResponse['status'], 'Login should redirect');
     
@@ -197,6 +199,7 @@ class AuthenticationFlowTest extends TestCase
         // Verify parameter values
         $this->assertEquals('login', $queryParams['flow'], 'Flow should be registration');
         $this->assertEquals('true', $queryParams['success'], 'Success should be true');
+        $this->assertIsString($queryParams['message'], 'Message parameter should be a string');
         $this->assertStringContainsString(
             'Authentication successful',
             urldecode($queryParams['message']),
@@ -208,7 +211,8 @@ class AuthenticationFlowTest extends TestCase
     {
         // Get the verification token from the email
         $verificationToken = $this->getMagicLinkTokenFromMessage();
-        
+        $this->assertNotNull($verificationToken, 'Verification token should be found in email');
+
         $tokenResponse = $this->verifyMagicLink($verificationToken);
 
         $this->assertEquals(302, $tokenResponse['status'], 'Magic link token redirect to app');
@@ -233,6 +237,7 @@ class AuthenticationFlowTest extends TestCase
         // Verify parameter values
         $this->assertEquals('registration', $queryParams['flow'], 'Flow should be registration');
         $this->assertEquals('true', $queryParams['success'], 'Success should be true');
+        $this->assertIsString($queryParams['message'], 'Message parameter should be a string');
         $this->assertStringContainsString(
             'Registration verified successfully',
             urldecode($queryParams['message']),
@@ -374,6 +379,10 @@ class AuthenticationFlowTest extends TestCase
      */
     private function assertEmailWasSent(string $expectedContent): void
     {
+        $this->assertNotNull($this->message, 'Email message should be available');
+        $this->assertArrayHasKey('Content', $this->message, 'Email should have Content');
+        $this->assertArrayHasKey('Body', $this->message['Content'], 'Email Content should have Body');
+
         $found = false;
         if (strpos($this->message['Content']['Body'], $expectedContent) !== false) {
             $found = true;
@@ -515,6 +524,10 @@ class AuthenticationFlowTest extends TestCase
 
         if ($messageUser === $emailUser) {
             // Extract magic link from email content
+            $this->assertNotNull($this->message, 'Email message should be available');
+            $this->assertArrayHasKey('Content', $this->message, 'Email should have Content');
+            $this->assertArrayHasKey('Body', $this->message['Content'], 'Email Content should have Body');
+
             $emailContent = $this->message['Content']['Body'];
 
             // Decode quoted-printable content to handle line breaks
@@ -529,6 +542,7 @@ class AuthenticationFlowTest extends TestCase
         return null;
     }
 
+    /** @return array<string, mixed> */
     private function verifyMagicLink(string $token): array
     {
         $response = $this->httpClient->get("/magic-link/verify?token={$token}", [
@@ -542,36 +556,11 @@ class AuthenticationFlowTest extends TestCase
         ];
     }
 
-    /**
-     * Exchange authorization code for access token (standard OAuth2 flow)
-     *
-     * @return array<string, mixed>
-     */
-    private function exchangeAuthCodeForAccessToken(string $authCode): array
-    {
-        $response = $this->httpClient->post('/oauth/token', [
-            'form_params' => [
-                'grant_type' => 'authorization_code',
-                'client_id' => $this->clientId,
-                'code' => $authCode,
-                'redirect_uri' => $this->pkceData['redirectUri'],
-                'code_verifier' => $this->pkceData['codeVerifier'],
-            ],
-            'headers' => [
-                'X-CLIENT-ID' => $this->clientId,
-            ],
-        ]);
-
-        return [
-            'status' => $response->getStatusCode(),
-            'body' => json_decode($response->getBody()->getContents(), true),
-        ];
-    }
-
     /** @return array<string, mixed> */
     private function exchangeMagicLinkTokenForAccessToken(): array
     {
         $magicLinkToken = $this->getMagicLinkTokenFromMessage();
+        $this->assertNotNull($magicLinkToken, 'Magic link token should be found in email');
 
         $response = $this->httpClient->post('/oauth/token', [
             'form_params' => [

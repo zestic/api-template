@@ -1,18 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Cannot access offset ''body'' on Psr\\Http\\Message\\ResponseInterface\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
-			message: '#^Cannot access offset ''status'' on Psr\\Http\\Message\\ResponseInterface\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
 			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:ensureTestUserExists\(\) is unused\.$#'
 			identifier: method.unused
 			count: 1
@@ -49,38 +37,8 @@ parameters:
 			path: tests/Integration/AuthenticationFlowTest.php
 
 		-
-			message: '#^Method Test\\Integration\\AuthenticationFlowTest\:\:verifyMagicLink\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
-			message: '#^Parameter \#1 \$string of function urldecode expects string, array\<mixed\>\|string given\.$#'
-			identifier: argument.type
-			count: 2
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
-			message: '#^Parameter \#1 \$token of method Test\\Integration\\AuthenticationFlowTest\:\:verifyMagicLink\(\) expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
 			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$accessToken is unused\.$#'
 			identifier: property.unused
-			count: 1
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
-			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$message has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
-			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$pkceData type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: tests/Integration/AuthenticationFlowTest.php
 
@@ -93,17 +51,5 @@ parameters:
 		-
 			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$testUser is never read, only written\.$#'
 			identifier: property.onlyWritten
-			count: 1
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
-			message: '#^Property Test\\Integration\\AuthenticationFlowTest\:\:\$testUser type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Integration/AuthenticationFlowTest.php
-
-		-
-			message: '#^Undefined variable\: \$authCode$#'
-			identifier: variable.undefined
 			count: 1
 			path: tests/Integration/AuthenticationFlowTest.php
