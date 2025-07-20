@@ -73,8 +73,8 @@ final class ProfileHydrationTest extends TestCase
     public function testHydrateWithCompleteData(): void
     {
         $data = [
-            'id' => '789e0123-e89b-12d3-a456-426614174002',
-            'name' => 'Bob Johnson',
+            'id'         => '789e0123-e89b-12d3-a456-426614174002',
+            'name'       => 'Bob Johnson',
             'created_at' => '2023-03-01 08:15:30',
             'updated_at' => '2023-03-05 14:45:20',
         ];
@@ -93,8 +93,8 @@ final class ProfileHydrationTest extends TestCase
     public function testHydrateWithNullUpdatedAt(): void
     {
         $data = [
-            'id' => '012e3456-e89b-12d3-a456-426614174003',
-            'name' => 'Alice Brown',
+            'id'         => '012e3456-e89b-12d3-a456-426614174003',
+            'name'       => 'Alice Brown',
             'created_at' => '2023-04-01 12:00:00',
             'updated_at' => null,
         ];
@@ -156,7 +156,7 @@ final class ProfileHydrationTest extends TestCase
         $profile->setId('345e6789-e89b-12d3-a456-426614174004');
 
         $updateData = [
-            'name' => 'Updated Name',
+            'name'       => 'Updated Name',
             'updated_at' => '2023-05-01 16:20:10',
         ];
 
@@ -192,8 +192,8 @@ final class ProfileHydrationTest extends TestCase
     public function testHydrateWithSoftDeletedProfile(): void
     {
         $data = [
-            'id' => '888e7777-e89b-12d3-a456-426614174888',
-            'name' => 'Soft Deleted Profile',
+            'id'         => '888e7777-e89b-12d3-a456-426614174888',
+            'name'       => 'Soft Deleted Profile',
             'created_at' => '2023-02-01 09:00:00',
             'updated_at' => null,
             'deleted_at' => '2023-02-15 16:45:00',

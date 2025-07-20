@@ -24,7 +24,7 @@ final class SendMagicLinkResolver implements ResolverInterface
      */
     public function __invoke($source, array $args, $context, ResolveInfo $info): mixed
     {
-        $data = $args['input'];
+        $data             = $args['input'];
         $data['clientId'] = $context->getRequest()->getHeaderLine('X-CLIENT-ID');
         $magicLinkContext = new MagicLinkContext($data);
 

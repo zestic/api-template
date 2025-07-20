@@ -9,7 +9,6 @@ use Domain\Profile\Entity\Profile;
 use Domain\Profile\Factory\ProfileFactory;
 use Domain\Profile\Repository\ProfileRepositoryInterface;
 use Domain\User\Interactor\UserRegistration;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Zestic\GraphQL\AuthComponent\Context\RegistrationContext;
@@ -45,12 +44,12 @@ class UserRegistrationTest extends TestCase
         $profileId   = 'profile-456';
 
         $context = $this->createRegistrationContext($displayName);
-        
+
         $expectedDto = new CreateProfileDTO($displayName);
-        
+
         $profile = new Profile();
         $profile->setId($profileId);
-        
+
         $user = $this->createMock(UserInterface::class);
 
         // Expectations
@@ -93,12 +92,12 @@ class UserRegistrationTest extends TestCase
         $profileId   = 'profile-789';
 
         $context = $this->createRegistrationContext($displayName);
-        
+
         $expectedDto = new CreateProfileDTO($displayName);
-        
+
         $profile = new Profile();
         $profile->setId($profileId);
-        
+
         $user = $this->createMock(UserInterface::class);
 
         // Expectations - verify integer is cast to string
@@ -185,7 +184,7 @@ class UserRegistrationTest extends TestCase
                 'otherField'  => 'ignored-value',
             ],
         ];
-        
+
         $context = new RegistrationContext($contextData);
 
         $user = $this->createMock(UserInterface::class);

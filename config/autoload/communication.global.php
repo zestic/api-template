@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'communication' => [
-        'routes'    => [
+        'routes'  => [
             'email' => 'bus',
         ],
-        'channel'   => [
+        'channel' => [
             'email' => [
                 'from' => 'notifications@zestic.com',
             ],

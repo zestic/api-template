@@ -14,7 +14,8 @@ class RegisterResolver implements ResolverInterface
 {
     public function __construct(
         private readonly RegisterUser $registerUser,
-    ) {}
+    ) {
+    }
 
     /**
      * @param mixed $source
@@ -23,8 +24,8 @@ class RegisterResolver implements ResolverInterface
      */
     public function __invoke($source, array $args, $context, ResolveInfo $info): mixed
     {
-        $data = $args['input'];
-        $data['clientId'] = $context->getRequest()->getHeaderLine('X-CLIENT-ID');
+        $data                = $args['input'];
+        $data['clientId']    = $context->getRequest()->getHeaderLine('X-CLIENT-ID');
         $data['displayName'] = $data['additionalData']['displayName'];
         $registrationContext = new RegistrationContext($data);
 

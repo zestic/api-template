@@ -10,16 +10,16 @@ return [
                 'application/json',
             ],
         ],
-        'schema' => [
-            'isCacheEnabled' => true,
-            'cacheDirectory' => __DIR__ . '/../../data/cache/graphql',
+        'schema'     => [
+            'isCacheEnabled'    => true,
+            'cacheDirectory'    => __DIR__ . '/../../data/cache/graphql',
             'schemaDirectories' => [
                 __DIR__ . '/../../resources/graphql',
                 __DIR__ . '/../../vendor/zestic/graphql-auth-component/resources/graphql',
             ],
-            'parserOptions' => [],
+            'parserOptions'     => [],
         ],
-        'server' => [
+        'server'     => [
             'errorsHandler' => function (array $errors, callable $formatter) {
                 foreach ($errors as $error) {
                     // Sentry\captureException($error);

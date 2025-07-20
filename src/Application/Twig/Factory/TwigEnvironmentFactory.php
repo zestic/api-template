@@ -21,14 +21,11 @@ use Twig\Error\LoaderError;
 use Twig\Extension\CoreExtension;
 use Twig\Extension\DebugExtension;
 use Twig\Extension\ExtensionInterface;
-use Twig\Loader\ChainLoader;
-use Twig\Loader\FilesystemLoader;
 use Twig\NodeVisitor\OptimizerNodeVisitor;
 use Twig\RuntimeLoader\RuntimeLoaderInterface;
 
 use function get_debug_type;
 use function is_array;
-use function is_numeric;
 use function is_string;
 use function sprintf;
 

@@ -66,7 +66,7 @@ final class CarbonImmutableHydrationTest extends TestCase
 
         // Dehydrate to string
         $dehydrated = $this->hydration->dehydrate($originalCarbon);
-        
+
         // Hydrate back to CarbonImmutable
         $rehydrated = $this->hydration->hydrate($dehydrated);
 
@@ -79,7 +79,7 @@ final class CarbonImmutableHydrationTest extends TestCase
     {
         // Dehydrate null
         $dehydrated = $this->hydration->dehydrate(null);
-        
+
         // Hydrate null back
         $rehydrated = $this->hydration->hydrate($dehydrated);
 

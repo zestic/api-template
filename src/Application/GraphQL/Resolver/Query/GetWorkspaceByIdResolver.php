@@ -11,12 +11,11 @@ class GetWorkspaceByIdResolver implements ResolverInterface
 {
     public function __construct(
         private readonly WorkspaceRepository $repository,
-    ) {}
+    ) {
+    }
 
     public function __invoke($source, array $args, $context, ResolveInfo $info): mixed
     {
-        $data = $this->repository->findById();
-
-        return $data;
+        return $this->repository->findById();
     }
 }

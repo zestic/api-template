@@ -33,7 +33,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     // Add comprehensive request/response logging
     $accessLogger = $container->get('logger.access');
-    $accessLog = (new AccessLog($accessLogger))
+    $accessLog    = (new AccessLog($accessLogger))
         ->format(AccessLog::FORMAT_COMBINED)
         ->context(function ($request, $response) {
             $context = [
@@ -49,7 +49,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
                     if (preg_match('/(?:query|mutation|subscription)\s+(\w+)/', $body['query'], $matches)) {
                         $context['graphql_operation'] = $matches[1];
                     }
-                    $context['graphql_variables'] = !empty($body['variables']) ? 'present' : 'none';
+                    $context['graphql_variables'] = ! empty($body['variables']) ? 'present' : 'none';
                 }
             }
 

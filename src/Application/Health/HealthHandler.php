@@ -52,14 +52,14 @@ final class HealthHandler implements RequestHandlerInterface
                     'status'  => 'error',
                     'message' => 'PostgreSQL database query failed',
                 ];
-                $health['status'] = 'error';
+                $health['status']             = 'error';
             }
         } catch (Throwable $e) {
             $health['checks']['postgres'] = [
                 'status'  => 'error',
                 'message' => 'PostgreSQL database connection failed: ' . $e->getMessage(),
             ];
-            $health['status'] = 'error';
+            $health['status']             = 'error';
         }
 
         // TODO: Add Weaviate vector database connectivity check

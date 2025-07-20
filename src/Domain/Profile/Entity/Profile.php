@@ -8,8 +8,8 @@ use Carbon\CarbonImmutable;
 
 class Profile
 {
-    private ?string $id = null;
-    private ?string $name = null;
+    private ?string $id                 = null;
+    private ?string $name               = null;
     private ?CarbonImmutable $createdAt = null;
     private ?CarbonImmutable $updatedAt = null;
     private ?CarbonImmutable $deletedAt = null;

@@ -8,28 +8,28 @@ use Twig\Environment;
 return [
     'dependencies' => [
         'factories' => [
-            Environment::class   => TwigEnvironmentFactory::class,
+            Environment::class => TwigEnvironmentFactory::class,
         ],
     ],
-    'templates' => [
+    'templates'    => [
         'extension' => 'html.twig',
-        'paths' => [
+        'paths'     => [
             realpath(getcwd() . '/resources/templates/print'),
         ],
     ],
-    'twig' => [
+    'twig'         => [
         'autoescape' => 'html', // Auto-escaping strategy [html|js|css|url|false]
-        'cache_dir' => realpath(getcwd() . '/data/cache/twig'),
+        'cache_dir'  => realpath(getcwd() . '/data/cache/twig'),
         'assets_url' => 'https://img.xddx.nl',
         //        'assets_version' => 'base version for assets',
-        'extensions' => [
+        'extensions'      => [
             // extension service names or instances
         ],
-        'globals' => [
+        'globals'         => [
             // Global variables passed to twig templates
-            'ga_tracking' => 'UA-XXXXX-X'
+            'ga_tracking' => 'UA-XXXXX-X',
         ],
-        'optimizations' => -1, // -1: Enable all (default), 0: disable optimizations
+        'optimizations'   => -1, // -1: Enable all (default), 0: disable optimizations
         'runtime_loaders' => [
             // runtime loader names or instances
         ],

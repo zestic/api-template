@@ -9,7 +9,6 @@ use Carbon\CarbonImmutable;
 use Communication\Interactor\SendCommunication;
 use Domain\Profile\Entity\Profile;
 use Domain\Profile\Repository\ProfileRepositoryInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Zestic\GraphQL\AuthComponent\Entity\MagicLinkConfig;
@@ -91,28 +90,28 @@ class SendMagicLinkEmailTest extends TestCase
             ->willReturn($verificationUrl);
 
         $expectedCommunication = [
-            'channels' => ['email'],
+            'channels'     => ['email'],
             'definitionId' => 'auth.magic-link',
-            'context' => [
+            'context'      => [
                 'subject' => ['name' => 'John Doe'],
-                'body' => [
+                'body'    => [
                     'name' => 'John Doe',
                     'link' => $verificationUrl,
                 ],
-                'email' => [
+                'email'   => [
                     'name' => 'John Doe',
                     'link' => $verificationUrl,
                 ],
-                'sms' => [
-                    'name' => 'John Doe',
-                    'link' => $verificationUrl,
+                'sms'     => [
+                    'name'  => 'John Doe',
+                    'link'  => $verificationUrl,
                     'email' => 'test@example.com',
                 ],
             ],
-            'recipients' => [
+            'recipients'   => [
                 [
                     'email' => 'test@example.com',
-                    'name' => 'John Doe',
+                    'name'  => 'John Doe',
                 ],
             ],
         ];

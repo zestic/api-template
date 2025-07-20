@@ -5,19 +5,33 @@ declare(strict_types=1);
 namespace Test\Integration;
 
 use AdrienGras\PKCE\PKCEUtils;
+use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use PDO;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
+use function bin2hex;
+use function chr;
+use function explode;
+use function json_decode;
+use function ord;
 use function parse_str;
 use function parse_url;
+use function preg_match;
+use function quoted_printable_decode;
+use function random_bytes;
+use function sleep;
+use function str_split;
+use function strpos;
+use function time;
 use function urldecode;
+use function usleep;
+use function vsprintf;
 
 /**
  * End-to-end authentication flow test
- * 
+ *
  * Tests the complete authentication flow:
  * 1. Magic link request with PKCE parameters
  * 2. Magic link verification and OAuth2 code generation
@@ -42,11 +56,11 @@ class AuthenticationFlowTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Initialize HTTP client for API calls (from inside Docker container)
         $this->httpClient = new Client([
-            'base_uri' => 'http://localhost:80', // Internal container port
-            'timeout' => 300, // Increased timeout for slower operations
+            'base_uri'    => 'http://localhost:80', // Internal container port
+            'timeout'     => 300, // Increased timeout for slower operations
             'http_errors' => false, // Don't throw exceptions on 4xx/5xx responses
         ]);
 
@@ -119,7 +133,7 @@ class AuthenticationFlowTest extends TestCase
     public function testMagicLinkRequestForUnregisteredUser(): void
     {
         $unregisteredEmail = 'unregistered-' . time() . '@example.com';
-        
+
         $response = $this->sendMagicLinkRequest($unregisteredEmail);
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -137,7 +151,7 @@ class AuthenticationFlowTest extends TestCase
     public function testInvalidMagicLinkToken(): void
     {
         $response = $this->verifyMagicLink('invalid-token-12345');
-        
+
         // Should return error page or redirect to error
         $this->assertContains($response['status'], [400, 404, 302]);
     }
@@ -179,7 +193,7 @@ class AuthenticationFlowTest extends TestCase
 
         $tokenResponse = $this->verifyMagicLink($verificationToken);
         $this->assertEquals(302, $tokenResponse['status'], 'Login should redirect');
-    
+
               // Verify redirect URL contains correct parameters
         $redirectUrl = $tokenResponse['location'];
         $this->assertNotNull($redirectUrl, 'Redirect URL should be present');
@@ -275,7 +289,7 @@ class AuthenticationFlowTest extends TestCase
 
         $variables = [
             'input' => [
-                'email' => $this->testEmail,
+                'email'          => $this->testEmail,
                 'additionalData' => [
                     'displayName' => 'Test User',
                 ],
@@ -317,7 +331,7 @@ class AuthenticationFlowTest extends TestCase
 
         // Create test user
         $userId = $this->generateUuid();
-        $stmt = $this->pdo->prepare("
+        $stmt   = $this->pdo->prepare("
             INSERT INTO users (id, display_name, email, verified_at, created_at, updated_at)
             VALUES (?, ?, ?, NOW(), NOW(), NOW())
         ");
@@ -349,12 +363,12 @@ class AuthenticationFlowTest extends TestCase
         ';
 
         $variables = [
-            'email' => $this->testEmail,
-            'clientId' => $this->clientId,
-            'codeChallenge' => $this->pkceData['codeChallenge'],
+            'email'               => $this->testEmail,
+            'clientId'            => $this->clientId,
+            'codeChallenge'       => $this->pkceData['codeChallenge'],
             'codeChallengeMethod' => $this->pkceData['codeChallengeMethod'],
-            'redirectUri' => $this->pkceData['redirectUri'],
-            'state' => $this->pkceData['state'],
+            'redirectUri'         => $this->pkceData['redirectUri'],
+            'state'               => $this->pkceData['state'],
         ];
 
         return $this->sendGraphqlMutation($mutation, $variables);
@@ -364,8 +378,8 @@ class AuthenticationFlowTest extends TestCase
     private function sendGraphqlMutation(string $mutation, array $variables): ResponseInterface
     {
         return $this->httpClient->post('/graphql', [
-            'json' => [
-                'query' => $mutation,
+            'json'    => [
+                'query'     => $mutation,
                 'variables' => $variables,
             ],
             'headers' => [
@@ -414,7 +428,7 @@ class AuthenticationFlowTest extends TestCase
      */
     private function waitForNextEmail(int $timeoutSeconds = 10): void
     {
-        $startTime = time();
+        $startTime     = time();
         $this->message = null;
 
         while (time() - $startTime < $timeoutSeconds) {
@@ -422,7 +436,7 @@ class AuthenticationFlowTest extends TestCase
                 $response = $this->httpClient->get('http://mailhog:8025/api/v2/messages');
                 $messages = json_decode($response->getBody()->getContents(), true);
 
-                if (!empty($messages['items'])) {
+                if (! empty($messages['items'])) {
                     // Save the most recent email
                     $this->message = $messages['items'][0];
 
@@ -430,7 +444,7 @@ class AuthenticationFlowTest extends TestCase
                     $this->clearMailHogEmails();
                     return;
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Continue waiting
             }
 
@@ -438,7 +452,7 @@ class AuthenticationFlowTest extends TestCase
             usleep(100000);
         }
 
-        throw new \Exception("No email received within {$timeoutSeconds} seconds");
+        throw new Exception("No email received within {$timeoutSeconds} seconds");
     }
 
     /**
@@ -448,7 +462,7 @@ class AuthenticationFlowTest extends TestCase
     {
         try {
             $this->httpClient->delete('http://mailhog:8025/api/v1/messages');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Ignore errors - MailHog might be empty or unavailable
         }
     }
@@ -550,9 +564,9 @@ class AuthenticationFlowTest extends TestCase
         ]);
 
         return [
-            'status' => $response->getStatusCode(),
+            'status'   => $response->getStatusCode(),
             'location' => $response->getHeader('Location')[0] ?? null,
-            'body' => $response->getBody()->getContents(),
+            'body'     => $response->getBody()->getContents(),
         ];
     }
 
@@ -564,20 +578,20 @@ class AuthenticationFlowTest extends TestCase
 
         $response = $this->httpClient->post('/oauth/token', [
             'form_params' => [
-                'grant_type' => 'magic_link',
-                'client_id' => $this->clientId,
-                'token' => $magicLinkToken,
-                'redirect_uri' => $this->pkceData['redirectUri'],
+                'grant_type'    => 'magic_link',
+                'client_id'     => $this->clientId,
+                'token'         => $magicLinkToken,
+                'redirect_uri'  => $this->pkceData['redirectUri'],
                 'code_verifier' => $this->pkceData['codeVerifier'],
             ],
-            'headers' => [
+            'headers'     => [
                 'X-CLIENT-ID' => $this->clientId,
             ],
         ]);
 
         return [
             'status' => $response->getStatusCode(),
-            'body' => json_decode($response->getBody()->getContents(), true),
+            'body'   => json_decode($response->getBody()->getContents(), true),
         ];
     }
 
@@ -588,16 +602,16 @@ class AuthenticationFlowTest extends TestCase
         $codeChallenge = PKCEUtils::generateCodeChallenge($codeVerifier);
 
         $this->pkceData = [
-            'clientId'            => $this->clientId,
-            'codeChallenge'       => $codeChallenge,
-            'redirectUri'         => 'http://localhost:8081/auth/callback',
-            'state'               => $flow . '-' . time() . '-' . bin2hex(random_bytes(8)),
+            'clientId'      => $this->clientId,
+            'codeChallenge' => $codeChallenge,
+            'redirectUri'   => 'http://localhost:8081/auth/callback',
+            'state'         => $flow . '-' . time() . '-' . bin2hex(random_bytes(8)),
         ];
     }
 
     private function generateUuid(): string
     {
-        $data = random_bytes(16);
+        $data    = random_bytes(16);
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
         $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));

@@ -43,14 +43,14 @@ final class PostgresPDOFactoryTest extends TestCase
         // We expect this to throw a PDOException due to connection failure,
         // but not a RuntimeException due to missing configuration
         $this->expectException(PDOException::class);
-        
+
         ($this->factory)($this->container);
     }
 
     public function testFactoryThrowsExceptionWhenDbConfigNotFound(): void
     {
         $config = [];
-        
+
         $this->container
             ->expects(self::once())
             ->method('get')

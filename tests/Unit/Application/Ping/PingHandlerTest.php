@@ -20,7 +20,7 @@ final class PingHandlerTest extends TestCase
     public function testResponse(): void
     {
         $pingHandler = new PingHandler();
-        $response = $pingHandler->handle(
+        $response    = $pingHandler->handle(
             $this->createMock(ServerRequestInterface::class)
         );
 
@@ -30,7 +30,7 @@ final class PingHandlerTest extends TestCase
         self::assertTrue(property_exists($json, 'ack') && $json->ack !== null);
         self::assertIsInt($json->ack);
         self::assertGreaterThan(0, $json->ack);
-        
+
         // Verify the timestamp is recent (within last 5 seconds)
         $currentTime = time();
         self::assertLessThanOrEqual($currentTime, $json->ack);
@@ -40,16 +40,16 @@ final class PingHandlerTest extends TestCase
     public function testResponseStructure(): void
     {
         $pingHandler = new PingHandler();
-        $response = $pingHandler->handle(
+        $response    = $pingHandler->handle(
             $this->createMock(ServerRequestInterface::class)
         );
 
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals('application/json', $response->getHeaderLine('Content-Type'));
-        
+
         $body = (string) $response->getBody();
         self::assertJson($body);
-        
+
         $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
         self::assertIsArray($data);
         self::assertArrayHasKey('ack', $data);

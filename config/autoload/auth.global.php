@@ -37,17 +37,17 @@ return [
             },
         ],
     ],
-    'auth' => [
-        'token' => [
+    'auth'         => [
+        'token'     => [
             'accessTokenTtl'  => (int) (getenv('AUTH_ACCESS_TOKEN_TTL') ?: 60), // Default 1 hour (in minutes)
             'loginTtl'        => (int) (getenv('AUTH_LOGIN_TTL') ?: 10), // Default 10 minutes
             'refreshTokenTtl' => (int) (getenv('AUTH_REFRESH_TOKEN_TTL') ?: 10080), // Default 1 week (in minutes)
             'registrationTtl' => (int) (getenv('AUTH_REGISTRATION_TTL') ?: 1440), // Default 24 hours (in minutes)
         ],
         'magicLink' => [
-            'authCallbackPath' => '/auth/callback',
-            'magicLinkPath' => '/auth/magic-link',
-            'defaultSuccessMessage' => 'Authentication successful',
+            'authCallbackPath'           => '/auth/callback',
+            'magicLinkPath'              => '/auth/magic-link',
+            'defaultSuccessMessage'      => 'Authentication successful',
             'registrationSuccessMessage' => 'Registration verified successfully',
         ],
     ],

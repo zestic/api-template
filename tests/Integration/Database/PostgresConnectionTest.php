@@ -11,10 +11,13 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 
+use function getenv;
+use function sprintf;
+
 /**
  * Integration tests for PostgreSQL database connectivity.
  * These tests require a running PostgreSQL instance.
- * 
+ *
  * @group integration
  * @group database
  */
@@ -30,7 +33,7 @@ final class PostgresConnectionTest extends TestCase
     public function testCanConnectToPostgresWithValidCredentials(): void
     {
         // Skip test if database environment variables are not set
-        if (!$this->isDatabaseConfigured()) {
+        if (! $this->isDatabaseConfigured()) {
             $this->markTestSkipped('Database configuration not available for integration testing');
         }
 
@@ -52,7 +55,7 @@ final class PostgresConnectionTest extends TestCase
             ->willReturn($config);
 
         $factory = new PostgresPDOFactory();
-        
+
         try {
             $pdo = $factory($this->container);
 
@@ -60,21 +63,20 @@ final class PostgresConnectionTest extends TestCase
             self::assertEquals(PDO::ERRMODE_EXCEPTION, $pdo->getAttribute(PDO::ATTR_ERRMODE));
             self::assertEquals(PDO::FETCH_ASSOC, $pdo->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE));
             self::assertFalse($pdo->getAttribute(PDO::ATTR_EMULATE_PREPARES));
-            
+
             // Test a simple query to verify connection works
             $stmt = $pdo->query('SELECT version()');
             if ($stmt === false) {
                 throw new RuntimeException('Failed to execute database query');
             }
             $version = $stmt->fetchColumn();
-            
+
             self::assertIsString($version);
             self::assertStringContainsString('PostgreSQL', $version);
-            
         } catch (PDOException $e) {
             $this->fail(sprintf(
-                'Failed to connect to PostgreSQL database: %s. ' .
-                'Ensure PostgreSQL is running and credentials are correct.',
+                'Failed to connect to PostgreSQL database: %s. '
+                . 'Ensure PostgreSQL is running and credentials are correct.',
                 $e->getMessage()
             ));
         }
@@ -100,7 +102,7 @@ final class PostgresConnectionTest extends TestCase
             ->willReturn($config);
 
         $factory = new PostgresPDOFactory();
-        
+
         $this->expectException(PDOException::class);
         $factory($this->container);
     }
@@ -108,7 +110,7 @@ final class PostgresConnectionTest extends TestCase
     private function isDatabaseConfigured(): bool
     {
         // Check if we're in a CI environment or have database configuration
-        return getenv('CI') !== false || 
+        return getenv('CI') !== false ||
                (getenv('DB_HOST') !== false && getenv('DB_USER') !== false);
     }
 }

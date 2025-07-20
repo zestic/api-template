@@ -11,6 +11,7 @@ use PDOStatement;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 
 use function json_decode;
 use function time;
@@ -26,8 +27,8 @@ final class HealthHandlerTest extends TestCase
     protected function setUp(): void
     {
         $this->container = $this->createMock(ContainerInterface::class);
-        $this->pdo = $this->createMock(PDO::class);
-        $this->handler = new HealthHandler($this->container);
+        $this->pdo       = $this->createMock(PDO::class);
+        $this->handler   = new HealthHandler($this->container);
     }
 
     public function testHealthCheckWithSuccessfulDatabaseConnection(): void
@@ -47,14 +48,14 @@ final class HealthHandlerTest extends TestCase
             ->with(PDO::class)
             ->willReturn($this->pdo);
 
-        $request = $this->createMock(ServerRequestInterface::class);
+        $request  = $this->createMock(ServerRequestInterface::class);
         $response = $this->handler->handle($request);
 
         self::assertInstanceOf(JsonResponse::class, $response);
         self::assertEquals(200, $response->getStatusCode());
 
         $body = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-        
+
         self::assertEquals('ok', $body['status']);
         self::assertIsInt($body['timestamp']);
         self::assertGreaterThan(time() - 5, $body['timestamp']);
@@ -69,16 +70,16 @@ final class HealthHandlerTest extends TestCase
         $this->container->expects(self::once())
             ->method('get')
             ->with(PDO::class)
-            ->willThrowException(new \RuntimeException('Connection failed'));
+            ->willThrowException(new RuntimeException('Connection failed'));
 
-        $request = $this->createMock(ServerRequestInterface::class);
+        $request  = $this->createMock(ServerRequestInterface::class);
         $response = $this->handler->handle($request);
 
         self::assertInstanceOf(JsonResponse::class, $response);
         self::assertEquals(503, $response->getStatusCode());
 
         $body = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-        
+
         self::assertEquals('error', $body['status']);
         self::assertIsInt($body['timestamp']);
         self::assertArrayHasKey('checks', $body);
@@ -104,14 +105,14 @@ final class HealthHandlerTest extends TestCase
             ->with(PDO::class)
             ->willReturn($this->pdo);
 
-        $request = $this->createMock(ServerRequestInterface::class);
+        $request  = $this->createMock(ServerRequestInterface::class);
         $response = $this->handler->handle($request);
 
         self::assertInstanceOf(JsonResponse::class, $response);
         self::assertEquals(503, $response->getStatusCode());
 
         $body = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-        
+
         self::assertEquals('error', $body['status']);
         self::assertEquals('error', $body['checks']['postgres']['status']);
         self::assertEquals('PostgreSQL database query failed', $body['checks']['postgres']['message']);
