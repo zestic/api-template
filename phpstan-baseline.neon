@@ -1,48 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Cannot call method getEmail\(\) on Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface\|null\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: src/Application/Authentication/Communication/SendMagicLinkEmail.php
-
-		-
-			message: '#^Cannot call method getName\(\) on Domain\\Profile\\Entity\\Profile\|null\.$#'
-			identifier: method.nonObject
-			count: 5
-			path: src/Application/Authentication/Communication/SendMagicLinkEmail.php
-
-		-
-			message: '#^Cannot call method getSystemId\(\) on Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: src/Application/Authentication/Communication/SendMagicLinkEmail.php
-
-		-
-			message: '#^Parameter \#1 \$id of method Domain\\Profile\\Repository\\ProfileRepositoryInterface\:\:findById\(\) expects string, int\|string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Application/Authentication/Communication/SendMagicLinkEmail.php
-
-		-
-			message: '#^Cannot call method setSystemId\(\) on Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: src/Domain/User/Interactor/UserRegistration.php
-
-		-
-			message: '#^Parameter \#1 \$id of method Zestic\\GraphQL\\AuthComponent\\Repository\\UserRepositoryInterface\:\:findUserById\(\) expects string, int\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Domain/User/Interactor/UserRegistration.php
-
-		-
-			message: '#^Parameter \#1 \$user of method Zestic\\GraphQL\\AuthComponent\\Repository\\UserRepositoryInterface\:\:update\(\) expects Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface, Zestic\\GraphQL\\AuthComponent\\Entity\\UserInterface\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Domain/User/Interactor/UserRegistration.php
-
-		-
 			message: '#^Cannot access offset ''body'' on Psr\\Http\\Message\\ResponseInterface\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 2

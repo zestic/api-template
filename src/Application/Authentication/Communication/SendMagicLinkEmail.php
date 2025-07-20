@@ -6,6 +6,7 @@ namespace Application\Authentication\Communication;
 
 use Communication\Interactor\SendCommunication;
 use Domain\Profile\Repository\ProfileRepositoryInterface;
+use RuntimeException;
 use Zestic\GraphQL\AuthComponent\Communication\SendMagicLinkInterface;
 use Zestic\GraphQL\AuthComponent\Entity\MagicLinkConfig;
 use Zestic\GraphQL\AuthComponent\Entity\MagicLinkToken;
@@ -23,8 +24,15 @@ final class SendMagicLinkEmail implements SendMagicLinkInterface
 
     public function send(MagicLinkToken $magicLinkToken): void
     {
-        $user    = $this->userRepository->findUserById($magicLinkToken->userId);
-        $profile = $this->profileRepository->findById($user->getSystemId());
+        $user = $this->userRepository->findUserById($magicLinkToken->userId);
+        if ($user === null) {
+            throw new RuntimeException("User not found for magic link: {$magicLinkToken->userId}");
+        }
+
+        $profile = $this->profileRepository->findById((string) $user->getSystemId());
+        if ($profile === null) {
+            throw new RuntimeException("Profile not found for user: {$user->getSystemId()}");
+        }
 
         $verificationUrl = $this->magicLinkConfig->buildRedirectUrl(
             'http://localhost:8088/magic-link/verify',
