@@ -9,7 +9,6 @@ use Domain\Profile\Entity\Profile;
 use Domain\Profile\Factory\ProfileFactory;
 use Domain\Profile\Repository\ProfileRepositoryInterface;
 use Domain\User\Interactor\UserRegistration;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Zestic\GraphQL\AuthComponent\Context\RegistrationContext;
