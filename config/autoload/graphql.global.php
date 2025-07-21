@@ -21,9 +21,10 @@ return [
         ],
         'server'     => [
             'errorsHandler' => function (array $errors, callable $formatter) {
-                foreach ($errors as $error) {
-                    // Sentry\captureException($error);
-                }
+                // TODO: Implement error handling (e.g., Sentry\captureException($error))
+                // foreach ($errors as $error) {
+                //     // Handle error
+                // }
 
                 return array_map($formatter, $errors);
             },

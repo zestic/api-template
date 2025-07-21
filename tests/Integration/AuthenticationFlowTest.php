@@ -124,7 +124,11 @@ class AuthenticationFlowTest extends TestCase
 
         // Verify the access token is a valid JWT
         $this->assertNotEmpty($tokenResponse['body']['access_token'], 'Access token should not be empty');
-        $this->assertStringContainsString('.', $tokenResponse['body']['access_token'], 'Access token should be a JWT (contains dots)');
+        $this->assertStringContainsString(
+            '.',
+            $tokenResponse['body']['access_token'],
+            'Access token should be a JWT (contains dots)'
+        );
     }
 
     /**
@@ -343,8 +347,14 @@ class AuthenticationFlowTest extends TestCase
     private function cleanupTestData(): void
     {
         // Clean up test user and related data
-        $this->pdo->exec("DELETE FROM magic_link_tokens WHERE user_id IN (SELECT id FROM users WHERE email LIKE 'test-%' OR email LIKE 'unregistered-%')");
-        $this->pdo->exec("DELETE FROM oauth_auth_codes WHERE user_id IN (SELECT id FROM users WHERE email LIKE 'test-%' OR email LIKE 'unregistered-%')");
+        $this->pdo->exec(
+            "DELETE FROM magic_link_tokens WHERE user_id IN "
+            . "(SELECT id FROM users WHERE email LIKE 'test-%' OR email LIKE 'unregistered-%')"
+        );
+        $this->pdo->exec(
+            "DELETE FROM oauth_auth_codes WHERE user_id IN "
+            . "(SELECT id FROM users WHERE email LIKE 'test-%' OR email LIKE 'unregistered-%')"
+        );
         $this->pdo->exec("DELETE FROM users WHERE email LIKE 'test-%' OR email LIKE 'unregistered-%'");
     }
 
@@ -494,7 +504,8 @@ class AuthenticationFlowTest extends TestCase
                     $decodedContent = quoted_printable_decode($emailContent);
 
                     // Extract token from login email
-                    if (preg_match('/http:\/\/localhost:8088\/magic-link\/verify\?token=(?:3D)?([a-f0-9]+)/', $decodedContent, $matches)) {
+                    $pattern = '/http:\/\/localhost:8088\/magic-link\/verify\?token=(?:3D)?([a-f0-9]+)/';
+                    if (preg_match($pattern, $decodedContent, $matches)) {
                         return $matches[1];
                     }
                 }
@@ -548,7 +559,8 @@ class AuthenticationFlowTest extends TestCase
             $decodedContent = quoted_printable_decode($emailContent);
 
             // Look for magic link URL pattern (handle URL encoding)
-            if (preg_match('/http:\/\/localhost:8088\/magic-link\/verify\?token(?:%3D|=)([a-f0-9]+)/', $decodedContent, $matches)) {
+            $pattern = '/http:\/\/localhost:8088\/magic-link\/verify\?token(?:%3D|=)([a-f0-9]+)/';
+            if (preg_match($pattern, $decodedContent, $matches)) {
                 return $matches[1]; // Return the token part
             }
         }

@@ -35,6 +35,7 @@ jobs:
       - name: Install Dependencies
         run: |
           docker run --rm \
+            --network host \
             -v ${{ github.workspace }}:/app \
             -e DB_HOST=localhost \
             -e DB_PORT=5432 \
@@ -45,32 +46,19 @@ jobs:
             admin-api \
             sh -c "git config --global --add safe.directory /app && composer install --no-interaction"
 
-      - name: Copy Test Database Config
+      - name: Run Database Migrations
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}:/app \
-            -e DB_HOST=localhost \
-            -e DB_PORT=5432 \
-            -e DB_NAME=zestic_api_test \
-            -e DB_USER=zestic \
-            -e DB_PASSWORD=password1 \
-            -e DB_SCHEMA=public \
-            admin-api \
-            sh -c "git config --global --add safe.directory /app && cp config/autoload/database.local.php.dist config/autoload/database.local.php"
-
-      - name: Run Tests
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/app \
-            -e DB_HOST=localhost \
-            -e DB_PORT=5432 \
-            -e DB_NAME=zestic_api_test \
-            -e DB_USER=zestic \
-            -e DB_PASSWORD=password1 \
-            -e DB_SCHEMA=public \
             --network host \
+            -v ${{ github.workspace }}:/app \
+            -e DB_HOST=localhost \
+            -e DB_PORT=5432 \
+            -e DB_NAME=zestic_api_test \
+            -e DB_USER=zestic \
+            -e DB_PASSWORD=password1 \
+            -e DB_SCHEMA=public \
             admin-api \
-            sh -c "git config --global --add safe.directory /app && composer test"
+            sh -c "git config --global --add safe.directory /app && ./vendor/bin/phinx migrate -e testing"
 
       - name: Run Tests
         run: |
@@ -84,12 +72,13 @@ jobs:
             -e DB_PASSWORD=password1 \
             -e DB_SCHEMA=public \
             admin-api \
-            sh -c "git config --global --add safe.directory /app && ./vendor/bin/phpunit --colors=always"
+            sh -c "git config --global --add safe.directory /app && ./vendor/bin/phpunit --colors=always --testsuite=all"
 
       - name: Upload Coverage Report
         if: success()
         run: |
           docker run --rm \
+            --network host \
             -v ${{ github.workspace }}:/app \
             -e DB_HOST=localhost \
             -e DB_PORT=5432 \

@@ -21,6 +21,12 @@
     <!-- Include all rules from the Laminas Coding Standard -->
     <rule ref="LaminasCodingStandard"/>
 
+    <!-- Exclude deprecated sniff and use the newer one -->
+    <rule ref="LaminasCodingStandard">
+        <exclude name="Squiz.WhiteSpace.LanguageConstructSpacing"/>
+    </rule>
+    <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
+
     <rule ref="Squiz.Classes.ClassFileName.NoMatch">
         <exclude-pattern>src/ConfigProvider.*.php</exclude-pattern>
     </rule>

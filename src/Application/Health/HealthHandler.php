@@ -77,7 +77,9 @@ final class HealthHandler implements RequestHandlerInterface
      *
      * @return array<string, string>
      */
-    // @phpstan-ignore-next-line method.unused
+    /**
+     * @phpstan-ignore-next-line method.unused
+     */
     private function checkWeaviate(): array
     {
         // TODO: Implement Weaviate connectivity check

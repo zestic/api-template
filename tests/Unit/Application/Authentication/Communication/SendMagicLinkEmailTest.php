@@ -9,6 +9,7 @@ use Carbon\CarbonImmutable;
 use Communication\Interactor\SendCommunication;
 use Domain\Profile\Entity\Profile;
 use Domain\Profile\Repository\ProfileRepositoryInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Zestic\GraphQL\AuthComponent\Entity\MagicLinkConfig;
