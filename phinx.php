@@ -40,7 +40,7 @@ return [
         'testing' => [
             'adapter' => 'pgsql',
             'host' => getenv('DB_HOST') ?: 'localhost',
-            'name' => getenv('DB_NAME') ? getenv('DB_NAME') . '_test' : 'zestic_api_test',
+            'name' => getenv('DB_NAME') ?: 'zestic_api_test',
             'user' => getenv('DB_USER') ?: 'zestic',
             'pass' => getenv('DB_PASSWORD') ?: 'password1',
             'port' => (int) (getenv('DB_PORT') ?: 5432),
