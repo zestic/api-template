@@ -7,9 +7,16 @@ on:
     branches: [ main ]
 
 jobs:
+  # Call the shared build-docker workflow
+  build:
+    name: Build Docker Image
+    uses: ./.github/workflows/build-docker.yml
+
+  # Run lint checks using the built Docker image
   lint:
     name: Code Quality Checks
     runs-on: ubuntu-latest
+    needs: build
 
     services:
       postgres:
@@ -26,57 +33,52 @@ jobs:
         ports:
           - 5432:5432
 
-    env:
-      DB_HOST: localhost
-      DB_PORT: 5432
-      DB_NAME: zestic_api
-      DB_USER: zestic
-      DB_PASSWORD: password1
-      DB_SCHEMA: public
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Build Docker Image
-        run: docker build -f docker/frankenphp/Dockerfile.frankenphp -t admin-api .
+      # Cache Composer dependencies
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ./vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
+      # Set up environment variables for all Docker commands
+      - name: Set up environment variables
+        id: env
+        run: |
+          echo "DB_ENV=-e DB_HOST=localhost -e DB_PORT=5432 -e DB_NAME=zestic_api -e DB_USER=zestic -e DB_PASSWORD=password1 -e DB_SCHEMA=public" >> $GITHUB_OUTPUT
+          echo "IMAGE_NAME=${{ needs.build.outputs.image-name }}" >> $GITHUB_OUTPUT
+
+      # Install dependencies if not cached
       - name: Install Dependencies
         run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/app \
-            -e DB_HOST=localhost \
-            -e DB_PORT=5432 \
-            -e DB_NAME=zestic_api \
-            -e DB_USER=zestic \
-            -e DB_PASSWORD=password1 \
-            -e DB_SCHEMA=public \
-            admin-api \
-            sh -c "git config --global --add safe.directory /app && composer install --no-interaction"
+          if [ ! -d "./vendor" ] || [ ! "$(ls -A ./vendor)" ]; then
+            echo "📦 Installing Composer dependencies..."
+            docker run --rm \
+              -v ${{ github.workspace }}:/app \
+              ${{ steps.env.outputs.DB_ENV }} \
+              ${{ steps.env.outputs.IMAGE_NAME }} \
+              sh -c "git config --global --add safe.directory /app && composer install --no-interaction --prefer-dist"
+          fi
 
       - name: Code Style Check
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/app \
-            -e DB_HOST=localhost \
-            -e DB_PORT=5432 \
-            -e DB_NAME=zestic_api \
-            -e DB_USER=zestic \
-            -e DB_PASSWORD=password1 \
-            -e DB_SCHEMA=public \
-            admin-api \
+            ${{ steps.env.outputs.DB_ENV }} \
+            ${{ steps.env.outputs.IMAGE_NAME }} \
             sh -c "git config --global --add safe.directory /app && ./vendor/bin/phpcs --parallel=1"
 
       - name: Static Analysis
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/app \
-            -e DB_HOST=localhost \
-            -e DB_PORT=5432 \
-            -e DB_NAME=zestic_api \
-            -e DB_USER=zestic \
-            -e DB_PASSWORD=password1 \
-            -e DB_SCHEMA=public \
-            admin-api \
+            ${{ steps.env.outputs.DB_ENV }} \
+            ${{ steps.env.outputs.IMAGE_NAME }} \
             sh -c "git config --global --add safe.directory /app && ./vendor/bin/phpstan analyse --memory-limit=1G --no-progress"
 
       - name: Security Check
