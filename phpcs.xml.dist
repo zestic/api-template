@@ -35,4 +35,9 @@
         <exclude-pattern>config/pipeline.php</exclude-pattern>
         <exclude-pattern>src/MezzioInstaller/Resources/config/routes-*.php</exclude-pattern>
     </rule>
+
+    <!-- Allow unused imports in test files for PHPStan type annotations -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
 </ruleset>
