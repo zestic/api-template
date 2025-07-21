@@ -35,17 +35,6 @@
             "xaddax/webonyx-psr15-middleware": true
         }
     },
-    "extra": {
-        "laminas": {
-            "component-whitelist": [
-                "mezzio/mezzio",
-                "mezzio/mezzio-helpers",
-                "mezzio/mezzio-router",
-                "laminas/laminas-httphandlerrunner",
-                "mezzio/mezzio-fastroute"
-            ]
-        }
-    },
     "require": {
         "php": "^8.4",
         "ext-intl": "*",
@@ -111,15 +100,6 @@
         }
     },
     "scripts": {
-        "post-create-project-cmd": [
-            "@development-enable"
-        ],
-        "post-install-cmd": "@clear-config-cache",
-        "post-update-cmd": "@clear-config-cache",
-        "development-disable": "laminas-development-mode disable",
-        "development-enable": "laminas-development-mode enable",
-        "development-status": "laminas-development-mode status",
-        "mezzio": "laminas --ansi",
         "check": [
             "@cs-check",
             "@test"
@@ -128,43 +108,54 @@
         "enable-codestandard": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
         "cs-check": "./vendor/bin/phpcs --parallel=1",
         "cs-fix": "./vendor/bin/phpcbf --parallel=1",
+        "development-disable": "laminas-development-mode disable",
+        "development-enable": "laminas-development-mode enable",
+        "development-status": "laminas-development-mode status",
+        "generate:resolvers": "vendor/bin/generate-resolvers",
+        "generate:requests": "vendor/bin/generate-requests",
+        "migrate": "docker compose exec app-api vendor/bin/phinx migrate",
+        "migrate:status": "docker compose exec app-api vendor/bin/phinx status",
+        "migrate:rollback": "docker compose exec app-api vendor/bin/phinx rollback -e development",
+        "phpstan": "phpstan analyse --memory-limit=1G",
+        "phpstan:baseline": "phpstan analyse --generate-baseline",
+        "phpstan:clear-cache": "phpstan clear-result-cache",
+        "post-create-project-cmd": [
+            "@development-enable"
+        ],
+        "post-install-cmd": "@clear-config-cache",
+        "post-update-cmd": "@clear-config-cache",
+        "restart": "docker compose restart",
+        "seed": "docker compose exec app-api vendor/bin/phinx seed:run",
+        "seed:create": "docker compose exec app-api vendor/bin/phinx seed:create",
         "serve": [
             "Composer\\Config::disableProcessTimeout",
-            "php -S 0.0.0.0:8088 -t public/"
+            "docker compose up -d"
         ],
-        "static-analysis": "phpstan analyse --memory-limit=1G",
-        "static-analysis-baseline": "phpstan analyse --generate-baseline",
-        "static-analysis-clear-cache": "phpstan clear-result-cache",
+        "stop": "docker compose down",
         "test": "docker compose exec app-api vendor/bin/phpunit --colors=always --testsuite=all",
-        "test-unit": "docker compose exec app-api vendor/bin/phpunit --colors=always --testsuite=unit",
-        "test-integration": "docker compose exec app-api vendor/bin/phpunit --colors=always --testsuite=integration",
-        "test-coverage": "docker compose exec app-api vendor/bin/phpunit --colors=always --coverage-clover clover.xml",
-        "migrate": "docker compose exec app-api vendor/bin/phinx migrate",
-        "migrate-status": "docker compose exec app-api vendor/bin/phinx status",
-        "migrate-rollback": "docker compose exec app-api vendor/bin/phinx rollback -e development",
-        "seed": "docker compose exec app-api vendor/bin/phinx seed:run",
-        "seed-create": "docker compose exec app-api vendor/bin/phinx seed:create",
-        "generate-resolvers": "vendor/bin/generate-resolvers",
-        "generate-requests": "vendor/bin/generate-requests",
-        "restart": "docker compose restart",
-        "test-e2e": "docker compose exec app-api vendor/bin/phpunit --colors=always --filter testHappyPathForNewUser tests/Integration/AuthenticationFlowTest.php"
+        "test:auth-e2e": "docker compose exec app-api vendor/bin/phpunit --colors=always --filter testHappyPathForNewUser tests/Integration/AuthenticationFlowTest.php",
+        "test:unit": "docker compose exec app-api vendor/bin/phpunit --colors=always --testsuite=unit",
+        "test:coverage": "docker compose exec app-api vendor/bin/phpunit --colors=always --coverage-clover clover.xml",
+        "test:integration": "docker compose exec app-api vendor/bin/phpunit --colors=always --testsuite=integration"
     },
     "scripts-descriptions": {
         "clear-config-cache": "Clears merged config cache. Required for config changes to be applied.",
         "cs-check": "Check coding standards using PHPCS from vendor with parallel processing disabled for reliability.",
         "cs-fix": "Fix coding standards using PHPCBF from vendor with parallel processing disabled for reliability.",
-        "static-analysis": "Run static analysis tool PHPStan.",
-        "static-analysis-baseline": "Generate PHPStan baseline file.",
-        "static-analysis-clear-cache": "Clear PHPStan result cache.",
-        "test": "Run all tests (unit and integration) with PHPUnit",
-        "test-unit": "Run only unit tests with PHPUnit",
-        "test-integration": "Run only integration tests with PHPUnit",
+        "phpstan": "Run static analysis tool PHPStan.",
+        "phpstan:baseline": "Generate PHPStan baseline file.",
+        "phpstan:clear-cache": "Clear PHPStan result cache.",
         "migrate": "Run database migrations with Phinx",
-        "migrate-status": "Check migration status with Phinx",
-        "migrate-rollback": "Rollback last migration with Phinx",
-        "seed": "Run database seeds with Phinx",
-        "seed-create": "Create a new database seed with Phinx",
+        "migrate:status": "Check migration status with Phinx",
+        "migrate:rollback": "Rollback last migration with Phinx",
         "restart": "Restart Docker containers",
-        "test-e2e": "Run end-to-end authentication flow test with magic link OAuth2 integration"
+        "seed": "Run database seeds with Phinx",
+        "seed:create": "Create a new database seed with Phinx",
+        "serve": "Start the FrankenPHP development server with Docker Compose",
+        "stop": "Stop the Docker Compose services",
+        "test": "Run all tests (unit and integration) with PHPUnit",
+        "test:unit": "Run only unit tests with PHPUnit",
+        "test:integration": "Run only integration tests with PHPUnit",
+        "test:auth-e2e": "Run end-to-end authentication flow test with magic link OAuth2 integration"
     }
 }
